@@ -13,10 +13,10 @@ class TutorInfoBriefAdapter(private val tutorInfoSet: Array<TutorInfoBrief>) :
 
     inner class TutorInfoBriefViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)
-        val rating : TextView = view.findViewById(R.id.rating)
-        val subjects : TextView = view.findViewById(R.id.subjects)
-        val rate : TextView = view.findViewById(R.id.rate)
-        val profilePic : TextView = view.findViewById(R.id.profile_pic)
+        val rating: TextView = view.findViewById(R.id.rating)
+        val subjects: TextView = view.findViewById(R.id.subjects)
+        val rate: TextView = view.findViewById(R.id.rate)
+        //val profilePic : TextView = view.findViewById(R.id.profile_pic)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TutorInfoBriefViewHolder {
@@ -30,8 +30,8 @@ class TutorInfoBriefAdapter(private val tutorInfoSet: Array<TutorInfoBrief>) :
             name.text = tutorInfoSet[position].name
             rating.text = tutorInfoSet[position].rating.toString()
             subjects.text = tutorInfoSet[position].subjects[0]
-            rate.text = tutorInfoSet[position].rate.toString()
-            profilePic.text = tutorInfoSet[position].profilePic.toString()
+            rate.text = 8377.toChar() + tutorInfoSet[position].rate.toString()
+            //profilePic.text = tutorInfoSet[position].profilePic.toString()
         }
     }
 
