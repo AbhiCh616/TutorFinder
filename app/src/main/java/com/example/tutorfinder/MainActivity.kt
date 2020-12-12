@@ -10,19 +10,18 @@ import com.example.tutorfinder.models.TutorInfoBrief
 
 class MainActivity : AppCompatActivity() {
 
-    val tutorInfoBriefList : Array<TutorInfoBrief> = arrayOf(
-        TutorInfoBrief("Suruchi", 3.5F, listOf("Mathematics"), 4000),
-        TutorInfoBrief("Achal", 4.5F, listOf("Science"), 1000000)
+    private val tutorInfoBriefList: Array<TutorInfoBrief> = arrayOf(
+            TutorInfoBrief("Suruchi", 3.5F, listOf("Mathematics"), 4000),
+            TutorInfoBrief("Achal", 4.5F, listOf("Science"), 1000000)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val tutorListRecyclerView : RecyclerView = findViewById(R.id.rv_tutor_list)
+        val tutorListRecyclerView: RecyclerView = findViewById(R.id.rv_tutor_list)
+        tutorListRecyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = TutorInfoBriefAdapter(tutorInfoBriefList)
         tutorListRecyclerView.adapter = adapter
-        tutorListRecyclerView.layoutManager = LinearLayoutManager(this)
-
     }
 }
