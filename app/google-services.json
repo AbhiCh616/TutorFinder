@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "56169862401",
+    "project_id": "tutor-finder-f8d8d",
+    "storage_bucket": "tutor-finder-f8d8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56169862401:android:bff8a8550968b0c1c93700",
+        "android_client_info": {
+          "package_name": "com.example.tutorfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56169862401-3fusccdb574obchor08pttct6j1k3091.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzFot-M0Kqrefuf0LjmRpJc4Ymhn31KQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56169862401-3fusccdb574obchor08pttct6j1k3091.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
