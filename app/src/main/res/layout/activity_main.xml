@@ -19,4 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/tutor_info_brief_card" />
 
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/google_button"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
