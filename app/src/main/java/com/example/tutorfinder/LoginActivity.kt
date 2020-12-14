@@ -58,11 +58,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         updateUI(account)
     }
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
         if(user != null) {
             findViewById<SignInButton>(R.id.sign_in_button).visibility = View.GONE
             findViewById<Button>(R.id.sign_out_button).visibility = View.VISIBLE
             findViewById<TextView>(R.id.display_name).text = user.displayName
+            if(isNewUser) {
+                TODO("If the user is new")
+            }
         }
         else {
             findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
@@ -121,8 +124,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success")
+                        // Check if the user is new
+                        val isNew : Boolean = task.result!!.additionalUserInfo!!.isNewUser
                         val user = auth.currentUser
-                        updateUI(user)
+                        updateUI(user, isNew)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
