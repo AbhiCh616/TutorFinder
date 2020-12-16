@@ -3,4 +3,6 @@
     <string name="profile_pic">Profile Pic</string>
     <string name="per_month">Per Month</string>
     <string name="sign_out">Sign Out</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
 </resources>

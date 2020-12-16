@@ -64,7 +64,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             findViewById<Button>(R.id.sign_out_button).visibility = View.VISIBLE
             findViewById<TextView>(R.id.display_name).text = user.displayName
             if(isNewUser) {
-                TODO("If the user is new")
+                val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
+                startActivity(roleSelectionActivity)
             }
         }
         else {
