@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         if(user != null) {
             findViewById<SignInButton>(R.id.sign_in_button).visibility = View.GONE
             findViewById<Button>(R.id.sign_out_button).visibility = View.VISIBLE
-            findViewById<TextView>(R.id.display_name).text = user.displayName
+            findViewById<TextView>(R.id.display_name).text = user.displayName + " " + user.photoUrl
             if(isNewUser) {
                 val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
                 startActivity(roleSelectionActivity)
