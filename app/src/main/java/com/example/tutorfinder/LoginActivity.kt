@@ -63,11 +63,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             findViewById<SignInButton>(R.id.sign_in_button).visibility = View.GONE
             findViewById<Button>(R.id.sign_out_button).visibility = View.VISIBLE
             findViewById<TextView>(R.id.display_name).text = user.displayName + " " + user.photoUrl
+
+            // If the user is new
             if(isNewUser) {
                 val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
                 startActivity(roleSelectionActivity)
             }
+            // If the user is not new and a student
+            else if (user.photoUrl.toString() == "Student") {
+                val teachersListActivity = Intent(this, MainActivity::class.java)
+                startActivity(teachersListActivity)
+            }
         }
+
+        // If the user is not signed in
         else {
             findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
             findViewById<Button>(R.id.sign_out_button).visibility = View.GONE
