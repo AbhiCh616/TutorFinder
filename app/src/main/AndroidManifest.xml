@@ -21,6 +21,9 @@
         <activity android:name=".SelectRoleActivity">
 
         </activity>
+        <activity android:name=".StudentRegistrationActivity">
+
+        </activity>
         <activity android:name=".MainActivity">
 
         </activity>

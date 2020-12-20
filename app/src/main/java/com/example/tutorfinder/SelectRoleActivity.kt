@@ -54,7 +54,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         }
         }
 
-        val studentIntent = Intent(this, MainActivity::class.java)
+        val studentIntent = Intent(this, StudentRegistrationActivity::class.java)
         startActivity(studentIntent)
     }
 }
