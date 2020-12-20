@@ -42,7 +42,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.student -> triggerStudentFlow()
             R.id.teacher -> triggerTeacherFlow()
         }
@@ -57,8 +57,8 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         val profileUpdates = userProfileChangeRequest {
             photoUri = Uri.parse("Student")
         }
-        user!!.updateProfile(profileUpdates).addOnCompleteListener {
-            task -> if(task.isSuccessful) {
+        user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Log.d(TAG, "Student image updated.")
             }
         }

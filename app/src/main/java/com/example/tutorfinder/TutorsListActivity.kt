@@ -29,7 +29,7 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
     private var googleSignInClient: GoogleSignInClient? = null
 
     private lateinit var auth: FirebaseAuth
-    private var currentUser : FirebaseUser? = null
+    private var currentUser: FirebaseUser? = null
 
     private lateinit var signOutButton: Button
     private lateinit var displayName: TextView
@@ -41,7 +41,7 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.tutors_list)
 
         signOutButton = findViewById(R.id.sign_out_button)
         displayName = findViewById(R.id.display_name)
@@ -76,13 +76,12 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        if(user == null) {
+        if (user == null) {
             // If user is logged out, take them to login page
             val loginActivityIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginActivityIntent)
-        }
-        else {
-            displayName.text = "Hi! " + user.displayName
+        } else {
+            displayName.text = user.displayName
         }
     }
 

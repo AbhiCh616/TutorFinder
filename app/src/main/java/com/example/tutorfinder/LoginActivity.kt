@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.sign_in_button -> signIn()
             R.id.sign_out_button -> signOut()
         }
@@ -91,13 +91,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
-        if(user != null) {
+        if (user != null) {
             signInButton.visibility = View.GONE
             signOutButton.visibility = View.VISIBLE
-            displayName.text = user.displayName + " " + user.photoUrl
+            displayName.text = user.displayName
 
             // If the user is new
-            if(isNewUser) {
+            if (isNewUser) {
                 val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
                 startActivity(roleSelectionActivity)
             }
@@ -112,7 +112,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         else {
             signInButton.visibility = View.VISIBLE
             signOutButton.visibility = View.GONE
-            displayName.text = "NOTHING"
         }
     }
 
@@ -145,7 +144,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential: success")
                         // Check if the user is new
-                        val isUserNew : Boolean = task.result!!.additionalUserInfo!!.isNewUser
+                        val isUserNew: Boolean = task.result!!.additionalUserInfo!!.isNewUser
                         val user = auth.currentUser
                         updateUI(user, isUserNew)
                     } else {

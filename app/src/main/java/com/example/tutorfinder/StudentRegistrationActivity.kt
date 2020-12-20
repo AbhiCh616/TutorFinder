@@ -13,8 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener
-{
+class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private val TAG = StudentRegistrationActivity::class.qualifiedName
@@ -23,7 +22,7 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
 
-    private lateinit var nameField : EditText
+    private lateinit var nameField: EditText
     private lateinit var submitButton: Button
 
     private val db = Firebase.firestore
@@ -50,7 +49,7 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.submit -> submitInfo()
         }
     }
