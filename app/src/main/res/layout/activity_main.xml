@@ -19,15 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/tutor_info_brief_card" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/display_name"
         android:layout_width="wrap_content"
@@ -36,7 +27,7 @@
         android:layout_marginBottom="20dp"
         android:text="Anonymous"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sign_in_button" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/sign_out_button"
