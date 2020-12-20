@@ -12,26 +12,39 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private const val RC_SIGN_IN: Int = 1
-        private const val TAG: String = "LoginActivity"
+        private val TAG = LoginActivity::class.qualifiedName
     }
 
     private var googleSignInClient: GoogleSignInClient? = null
+
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var signInButton: SignInButton
+    private lateinit var signOutButton: Button
+    private lateinit var displayName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
+
+        signInButton = findViewById(R.id.sign_in_button)
+        signOutButton = findViewById(R.id.sign_out_button)
+        displayName = findViewById(R.id.display_name)
+
+        // Set on click listener
+        signInButton.setOnClickListener(this)
+        signOutButton.setOnClickListener(this)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -42,9 +55,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         // Build a GoogleSignInClient with the options specified by gso.
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        findViewById<SignInButton>(R.id.sign_in_button).setOnClickListener(this)
-        findViewById<Button>(R.id.sign_out_button).setOnClickListener(this)
-
         // Initialize Firebase Auth
         auth = Firebase.auth
     }
@@ -54,34 +64,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val account = auth.currentUser
-        updateUI(account)
-    }
-
-    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
-        if(user != null) {
-            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.GONE
-            findViewById<Button>(R.id.sign_out_button).visibility = View.VISIBLE
-            findViewById<TextView>(R.id.display_name).text = user.displayName + " " + user.photoUrl
-
-            // If the user is new
-            if(isNewUser) {
-                val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
-                startActivity(roleSelectionActivity)
-            }
-            // If the user is not new and a student
-            else if (user.photoUrl.toString() == "Student") {
-                val teachersListActivity = Intent(this, MainActivity::class.java)
-                startActivity(teachersListActivity)
-            }
-        }
-
-        // If the user is not signed in
-        else {
-            findViewById<SignInButton>(R.id.sign_in_button).visibility = View.VISIBLE
-            findViewById<Button>(R.id.sign_out_button).visibility = View.GONE
-            findViewById<TextView>(R.id.display_name).text = "NOTHING"
-        }
+        val user = auth.currentUser
+        updateUI(user)
     }
 
     override fun onClick(v: View) {
@@ -89,6 +73,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             R.id.sign_in_button -> signIn()
             R.id.sign_out_button -> signOut()
         }
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient?.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     private fun signOut() {
@@ -101,9 +90,30 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun signIn() {
-        val signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
+        if(user != null) {
+            signInButton.visibility = View.GONE
+            signOutButton.visibility = View.VISIBLE
+            displayName.text = user.displayName + " " + user.photoUrl
+
+            // If the user is new
+            if(isNewUser) {
+                val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
+                startActivity(roleSelectionActivity)
+            }
+            // If the user is not new and is a student
+            else if (user.photoUrl.toString() == "Student") {
+                val teachersListActivity = Intent(this, TutorsListActivity::class.java)
+                startActivity(teachersListActivity)
+            }
+        }
+
+        // If the user is not signed in
+        else {
+            signInButton.visibility = View.VISIBLE
+            signOutButton.visibility = View.GONE
+            displayName.text = "NOTHING"
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -115,7 +125,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+                Log.d(TAG, "firebaseAuthWithGoogle: " + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
@@ -124,7 +134,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    //Get an ID token from the GoogleSignInAccount object,
+    // Get an ID token from the GoogleSignInAccount object,
     // exchange it for a Firebase credential,
     // and authenticate with Firebase using the Firebase credential
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -133,15 +143,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithCredential:success")
+                        Log.d(TAG, "signInWithCredential: success")
                         // Check if the user is new
-                        val isNew : Boolean = task.result!!.additionalUserInfo!!.isNewUser
+                        val isUserNew : Boolean = task.result!!.additionalUserInfo!!.isNewUser
                         val user = auth.currentUser
-                        updateUI(user, isNew)
+                        updateUI(user, isUserNew)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        //Snackbar.make(view, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                        Log.w(TAG, "signInWithCredential: failure", task.exception)
+                        Snackbar.make(signInButton, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                         updateUI(null)
                     }
                 }

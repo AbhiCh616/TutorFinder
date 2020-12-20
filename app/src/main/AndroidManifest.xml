@@ -14,19 +14,16 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectRoleActivity">
 
-        </activity>
-        <activity android:name=".StudentRegistrationActivity">
+        <activity android:name=".SelectRoleActivity" />
 
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".StudentRegistrationActivity" />
 
-        </activity>
+        <activity android:name=".TutorsListActivity" />
+
     </application>
 
 </manifest>

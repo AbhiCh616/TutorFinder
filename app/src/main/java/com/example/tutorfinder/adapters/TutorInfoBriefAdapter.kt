@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfoBrief
 
-class TutorInfoBriefAdapter(private val tutorInfoSet: Array<TutorInfoBrief>) :
+class TutorInfoBriefAdapter(private val tutorInfoBriefSet: Array<TutorInfoBrief>) :
         RecyclerView.Adapter<TutorInfoBriefAdapter.TutorInfoBriefViewHolder>() {
 
     inner class TutorInfoBriefViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,13 +27,13 @@ class TutorInfoBriefAdapter(private val tutorInfoSet: Array<TutorInfoBrief>) :
 
     override fun onBindViewHolder(holder: TutorInfoBriefViewHolder, position: Int) {
         holder.apply {
-            name.text = tutorInfoSet[position].name
-            rating.text = tutorInfoSet[position].rating.toString()
-            subjects.text = tutorInfoSet[position].subjects[0]
-            rate.text = 8377.toChar() + tutorInfoSet[position].rate.toString()
+            name.text = tutorInfoBriefSet[position].name
+            rating.text = tutorInfoBriefSet[position].rating.toString()
+            subjects.text = tutorInfoBriefSet[position].subjects[0]
+            rate.text = 8377.toChar() + tutorInfoBriefSet[position].rate.toString()
             //profilePic.text = tutorInfoSet[position].profilePic.toString()
         }
     }
 
-    override fun getItemCount() = tutorInfoSet.size
+    override fun getItemCount() = tutorInfoBriefSet.size
 }

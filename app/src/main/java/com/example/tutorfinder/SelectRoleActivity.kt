@@ -8,27 +8,37 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 
 class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var auth:FirebaseAuth
-    private val TAG = "SelectRoleActivity"
+    companion object {
+        private val TAG = SelectRoleActivity::class.qualifiedName
+    }
+
+    private lateinit var auth: FirebaseAuth
+    private var user: FirebaseUser? = null
+
+    private lateinit var selectStudentButton: Button
+    private lateinit var selectTeacherButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_role)
 
-        findViewById<Button>(R.id.student).setOnClickListener(this)
-        findViewById<Button>(R.id.teacher).setOnClickListener(this)
+        selectStudentButton.setOnClickListener(this)
+        selectTeacherButton.setOnClickListener(this)
 
         auth = Firebase.auth
     }
 
     override fun onStart() {
         super.onStart()
+
+        user = auth.currentUser
     }
 
     override fun onClick(v: View) {
@@ -43,15 +53,14 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun triggerStudentFlow() {
-        // Update User Profile Photo to "Student"
-        val user = auth.currentUser
+        // Update user profile photo to "Student"
         val profileUpdates = userProfileChangeRequest {
             photoUri = Uri.parse("Student")
         }
         user!!.updateProfile(profileUpdates).addOnCompleteListener {
             task -> if(task.isSuccessful) {
-            Log.d(TAG, "User profile updated.")
-        }
+                Log.d(TAG, "Student image updated.")
+            }
         }
 
         val studentIntent = Intent(this, StudentRegistrationActivity::class.java)
