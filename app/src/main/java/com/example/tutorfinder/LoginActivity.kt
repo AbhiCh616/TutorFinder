@@ -103,8 +103,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
             // If the user is not new and is a student
             else if (user.photoUrl.toString() == "Student") {
-                val teachersListActivity = Intent(this, TutorsListActivity::class.java)
-                startActivity(teachersListActivity)
+                val tutorsListActivity = Intent(this, TutorsListActivity::class.java)
+                startActivity(tutorsListActivity)
+            }
+            // If the user is not new and a teacher
+            else {
+                val tutorProfileActivity = Intent(this, TutorProfileActivity::class.java)
+                startActivity(tutorProfileActivity)
             }
         }
 
