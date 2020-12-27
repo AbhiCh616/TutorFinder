@@ -11,20 +11,19 @@ import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
 
 class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
                             private val onItemClicked: (String) -> Unit) :
     FirestoreRecyclerAdapter<TutorInfo, TutorBriefInfoAdapter.TutorBriefInfoViewHolder>(options) {
 
-    inner class TutorBriefInfoViewHolder(private val view : View) : RecyclerView.ViewHolder(view),
+    inner class TutorBriefInfoViewHolder(view : View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
         val name: TextView = view.findViewById(R.id.name)
         val rating: TextView = view.findViewById(R.id.rating)
         val subjects: TextView = view.findViewById(R.id.subjects)
         val rate: TextView = view.findViewById(R.id.rate)
-        val profilePic: ImageView = view.findViewById(R.id.profile_pic);
+        val profilePic: ImageView = view.findViewById(R.id.profile_pic)
 
         init {
             view.setOnClickListener(this)
