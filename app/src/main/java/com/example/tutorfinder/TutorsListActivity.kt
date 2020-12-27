@@ -9,16 +9,20 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tutorfinder.adapters.TutorInfoBriefAdapter
+import com.example.tutorfinder.adapters.TutorBriefInfoAdapter
 import com.example.tutorfinder.models.TutorInfoBrief
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -30,14 +34,13 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
     private var currentUser: FirebaseUser? = null
+    private val db: FirebaseFirestore = Firebase.firestore
+    private val tutorsRef: CollectionReference = db.collection("tutors")
+
+    private var adapter: TutorBriefInfoAdapter? = null
 
     private lateinit var signOutButton: Button
     private lateinit var displayName: TextView
-
-    private val tutorInfoBriefList: Array<TutorInfoBrief> = arrayOf(
-            TutorInfoBrief("Suruchi", 3.5F, listOf("Mathematics"), 4000),
-            TutorInfoBrief("Achal", 4.5F, listOf("Science"), 1000000)
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +52,15 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
         // When sign out button is clicked
         signOutButton.setOnClickListener(this)
 
+        val query: Query = tutorsRef.orderBy("name", Query.Direction.DESCENDING)
+        val options: FirestoreRecyclerOptions<TutorInfoBrief> = FirestoreRecyclerOptions.Builder<TutorInfoBrief>()
+            .setQuery(query, TutorInfoBrief::class.java)
+            .build()
+
+        // Set up RecyclerView
         val tutorListRecyclerView: RecyclerView = findViewById(R.id.rv_tutor_list)
         tutorListRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = TutorInfoBriefAdapter(tutorInfoBriefList)
+        adapter = TutorBriefInfoAdapter(options)
         tutorListRecyclerView.adapter = adapter
 
         // Configure Google Sign In
@@ -73,6 +82,14 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = auth.currentUser
         updateUI(currentUser)
+
+        adapter?.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        adapter?.stopListening()
     }
 
     private fun updateUI(user: FirebaseUser?) {
