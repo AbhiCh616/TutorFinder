@@ -24,6 +24,8 @@
 
         <activity android:name=".TutorsListActivity" />
 
+        <activity android:name=".TutorDetailsActivity"/>
+
     </application>
 
 </manifest>
