@@ -45,18 +45,37 @@
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:hint="@string/subjects"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/rate"
         app:layout_constraintTop_toBottomOf="@+id/rate"
-        tools:text="@string/your_name"
-        android:inputType="text"/>
+        tools:text="@string/your_name" />
+
+    <TextView
+        android:id="@+id/distance_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="0 km"
+        app:layout_constraintStart_toStartOf="@+id/subjects"
+        app:layout_constraintTop_toBottomOf="@+id/subjects" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/distance_display"
+        app:layout_constraintTop_toBottomOf="@+id/distance_display" />
 
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:text="@string/submit"
         app:layout_constraintStart_toStartOf="@+id/subjects"
-        app:layout_constraintTop_toBottomOf="@+id/subjects" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
