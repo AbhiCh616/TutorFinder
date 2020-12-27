@@ -22,6 +22,8 @@
 
         <activity android:name=".StudentRegistrationActivity" />
 
+        <activity android:name=".TutorRegistrationActivity"/>
+
         <activity android:name=".TutorsListActivity" />
 
         <activity android:name=".TutorDetailsActivity"/>

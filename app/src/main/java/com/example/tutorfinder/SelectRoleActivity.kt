@@ -46,16 +46,17 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.student -> triggerStudentFlow()
-            R.id.teacher -> triggerTeacherFlow()
+            R.id.student -> triggerStudentRegistration()
+            R.id.teacher -> triggerTutorRegistration()
         }
     }
 
-    private fun triggerTeacherFlow() {
-        TODO("Not yet implemented")
+    private fun triggerTutorRegistration() {
+        val tutorIntent = Intent(this, TutorRegistrationActivity::class.java)
+        startActivity(tutorIntent)
     }
 
-    private fun triggerStudentFlow() {
+    private fun triggerStudentRegistration() {
         // Update user profile photo to "Student"
         val profileUpdates = userProfileChangeRequest {
             photoUri = Uri.parse("Student")
