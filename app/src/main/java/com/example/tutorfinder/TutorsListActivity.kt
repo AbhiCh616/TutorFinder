@@ -59,7 +59,11 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
         // Set up RecyclerView
         val tutorListRecyclerView: RecyclerView = findViewById(R.id.rv_tutor_list)
         tutorListRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TutorBriefInfoAdapter(options)
+        adapter = TutorBriefInfoAdapter(options) { docRef: String -> Unit
+            val intent = Intent(this, TutorDetailsActivity::class.java)
+            intent.putExtra("docRef", docRef)
+            startActivity(intent)
+        }
         tutorListRecyclerView.adapter = adapter
 
         // Configure Google Sign In
