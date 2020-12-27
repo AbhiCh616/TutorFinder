@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class TutorRegistrationActivity: AppCompatActivity(), View.OnClickListener {
 
@@ -34,6 +35,9 @@ class TutorRegistrationActivity: AppCompatActivity(), View.OnClickListener {
     private val db = Firebase.firestore
 
     private var profilePicUri: Uri? = null
+
+    private val storage = Firebase.storage
+    private val storageReference = storage.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +59,6 @@ class TutorRegistrationActivity: AppCompatActivity(), View.OnClickListener {
         super.onStart()
 
         user = auth.currentUser
-
-        //Set name field to what we get from Google account
-        nameField.setText(user?.displayName)
     }
 
     override fun onClick(v: View) {
@@ -75,23 +76,32 @@ class TutorRegistrationActivity: AppCompatActivity(), View.OnClickListener {
     }
 
     private fun submit() {
-        val subjectsList = listOf<String>(subjectsField.text.toString())
-        val newUserInfo = hashMapOf(
-            "name" to nameField.text.toString(),
-            "rating" to 0,
-            "subjects" to subjectsList,
-            "rate" to rateField.text.toString().toInt(),
-        )
 
-        db.collection("tutors")
-            .document(user!!.uid)
-            .set(newUserInfo)
-            .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot added.")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+        // Upload image to firebase cloud storage
+        val profilePicReference = storageReference.child(user!!.uid)
+        profilePicReference.putFile(profilePicUri!!)
+                .addOnSuccessListener {
+                    // Set data to upload
+                    val subjectsList = listOf<String>(subjectsField.text.toString())
+                    val newUserInfo = hashMapOf(
+                            "profilePic" to "gs://tutor-finder-f8d8d.appspot.com/" + user!!.uid,
+                            "name" to nameField.text.toString(),
+                            "rating" to 0,
+                            "subjects" to subjectsList,
+                            "rate" to rateField.text.toString().toInt(),
+                    )
+
+                    // Upload to firebase
+                    db.collection("tutors")
+                            .document(user!!.uid)
+                            .set(newUserInfo)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "DocumentSnapshot added.")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
