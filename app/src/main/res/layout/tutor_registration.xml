@@ -14,7 +14,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:hint="@string/your_name"
-        tools:text="@string/your_name" />
+        tools:text="@string/your_name"
+        android:inputType="text"
+        android:autofillHints="name"/>
 
     <EditText
         android:id="@+id/rate"
@@ -24,16 +26,27 @@
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name"
         android:hint="@string/rate"
-        tools:text="@string/your_name" />
+        tools:text="@string/your_name"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/subjects"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
+        android:hint="@string/subjects"
         app:layout_constraintStart_toStartOf="@+id/rate"
         app:layout_constraintTop_toBottomOf="@+id/rate"
-        android:hint="@string/subjects"
-        tools:text="@string/your_name" />
+        tools:text="@string/your_name"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/submit"
+        app:layout_constraintStart_toStartOf="@+id/subjects"
+        app:layout_constraintTop_toBottomOf="@+id/subjects" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
