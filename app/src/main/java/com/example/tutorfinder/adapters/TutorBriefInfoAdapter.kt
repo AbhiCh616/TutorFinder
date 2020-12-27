@@ -37,8 +37,8 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfoBrief>) :
         model: TutorInfoBrief
     ) {
         holder.name.text = model.name
-        holder.rating.text = "3.5"
-        holder.subjects.text = "Mathematics"
+        holder.rating.text = model.rating.toString()
+        holder.subjects.text = model.subjects[0]
         holder.rate.text = model.rate.toString()
 
         val storage = FirebaseStorage.getInstance()
