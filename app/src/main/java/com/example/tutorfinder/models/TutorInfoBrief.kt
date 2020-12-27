@@ -7,5 +7,5 @@ data class TutorInfoBrief(
         val rating: Float = 0f,
         val subjects: List<String> = listOf(),
         val rate: Int = 0,
-        val profilePic: Uri = Uri.EMPTY
+        val profilePic: String = ""
 )

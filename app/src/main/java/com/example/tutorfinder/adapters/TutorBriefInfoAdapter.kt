@@ -42,7 +42,7 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfoBrief>) :
         holder.rate.text = model.rate.toString()
 
         val storage = FirebaseStorage.getInstance()
-        val gsReference = storage.getReferenceFromUrl("gs://tutor-finder-f8d8d.appspot.com/reindeer-5706627_640.png")
+        val gsReference = storage.getReferenceFromUrl(model.profilePic)
 
         GlideApp.with(holder.profilePic.context)
             .load(gsReference)
