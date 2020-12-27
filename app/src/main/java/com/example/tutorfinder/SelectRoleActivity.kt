@@ -29,6 +29,9 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_role)
 
+        selectStudentButton = findViewById(R.id.student)
+        selectTeacherButton = findViewById(R.id.teacher)
+
         selectStudentButton.setOnClickListener(this)
         selectTeacherButton.setOnClickListener(this)
 
