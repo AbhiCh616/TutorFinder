@@ -3,14 +3,13 @@ package com.example.tutorfinder
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tutorfinder.adapters.TutorBriefInfoAdapter
-import com.example.tutorfinder.models.TutorInfoBrief
+import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -53,8 +52,8 @@ class TutorsListActivity : AppCompatActivity(), View.OnClickListener {
         signOutButton.setOnClickListener(this)
 
         val query: Query = tutorsRef.orderBy("name", Query.Direction.DESCENDING)
-        val options: FirestoreRecyclerOptions<TutorInfoBrief> = FirestoreRecyclerOptions.Builder<TutorInfoBrief>()
-            .setQuery(query, TutorInfoBrief::class.java)
+        val options: FirestoreRecyclerOptions<TutorInfo> = FirestoreRecyclerOptions.Builder<TutorInfo>()
+            .setQuery(query, TutorInfo::class.java)
             .build()
 
         // Set up RecyclerView

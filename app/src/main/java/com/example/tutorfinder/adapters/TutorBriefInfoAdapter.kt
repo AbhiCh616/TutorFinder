@@ -1,6 +1,5 @@
 package com.example.tutorfinder.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tutorfinder.GlideApp
 import com.example.tutorfinder.R
-import com.example.tutorfinder.models.TutorInfoBrief
+import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.storage.FirebaseStorage
 
-class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfoBrief>) :
-    FirestoreRecyclerAdapter<TutorInfoBrief, TutorBriefInfoAdapter.TutorBriefInfoViewHolder>(options) {
+class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>) :
+    FirestoreRecyclerAdapter<TutorInfo, TutorBriefInfoAdapter.TutorBriefInfoViewHolder>(options) {
 
     inner class TutorBriefInfoViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.name)
@@ -34,7 +33,7 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfoBrief>) :
     override fun onBindViewHolder(
         holder: TutorBriefInfoViewHolder,
         position: Int,
-        model: TutorInfoBrief
+        model: TutorInfo
     ) {
         holder.name.text = model.name
         holder.rating.text = model.rating.toString()
