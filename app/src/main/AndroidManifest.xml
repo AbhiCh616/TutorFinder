@@ -37,8 +37,6 @@
 
         <activity android:name=".activities.TutorDetailsActivity"/>
 
-        <activity android:name=".activities.TutorProfileActivity"/>
-
     </application>
 
 </manifest>
