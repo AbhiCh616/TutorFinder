@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tutorfinder.GlideApp
+import com.example.tutorfinder.utils.GlideApp
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
 import com.google.firebase.firestore.DocumentReference

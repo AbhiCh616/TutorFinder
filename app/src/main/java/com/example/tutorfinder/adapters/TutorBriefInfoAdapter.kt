@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tutorfinder.GlideApp
+import com.example.tutorfinder.utils.GlideApp
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
