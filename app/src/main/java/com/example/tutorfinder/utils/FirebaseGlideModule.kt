@@ -1,4 +1,4 @@
-package com.example.tutorfinder
+package com.example.tutorfinder.utils
 
 import android.content.Context
 import com.bumptech.glide.Glide
