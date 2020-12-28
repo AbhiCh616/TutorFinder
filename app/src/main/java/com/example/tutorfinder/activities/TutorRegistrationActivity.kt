@@ -128,6 +128,16 @@ class TutorRegistrationActivity : AppCompatActivity(), View.OnClickListener {
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
                             }
+
+                    openNextActivity()
                 }
+    }
+
+    // Start the tutor activity and clear all previous activities from stack
+    private fun openNextActivity() {
+        val intent = Intent(this, TutorActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }
