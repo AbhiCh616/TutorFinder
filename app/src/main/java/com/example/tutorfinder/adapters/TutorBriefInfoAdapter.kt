@@ -52,9 +52,11 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
         holder.subjects.text = model.subjects[0]
         holder.rate.text = model.rate.toString()
 
+        // Get reference of profile pic stored in firebase storage
         val storage = FirebaseStorage.getInstance()
         val gsReference = storage.getReferenceFromUrl(model.profilePic)
 
+        // Display profile pic from firebase cloud
         GlideApp.with(holder.profilePic.context)
             .load(gsReference)
             .into(holder.profilePic)
