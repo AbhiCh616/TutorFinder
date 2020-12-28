@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -27,25 +25,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         private val TAG = LoginActivity::class.qualifiedName
     }
 
+    // Google sign in
     private var googleSignInClient: GoogleSignInClient? = null
 
+    // Firebase sign in
     private lateinit var auth: FirebaseAuth
 
+    // Views
     private lateinit var signInButton: SignInButton
-    private lateinit var signOutButton: Button
-    private lateinit var displayName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
 
+        // Instantiate views
         signInButton = findViewById(R.id.sign_in_button)
-        signOutButton = findViewById(R.id.sign_out_button)
-        displayName = findViewById(R.id.display_name)
 
-        // Set on click listener
+        // Set onClick listener
         signInButton.setOnClickListener(this)
-        signOutButton.setOnClickListener(this)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -63,8 +60,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
 
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
+        /* Check for existing Google Sign In account, if the user is already signed in
+         the GoogleSignInAccount will be non-null. */
         val user = auth.currentUser
         updateUI(user)
     }
@@ -72,7 +69,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sign_in_button -> signIn()
-            R.id.sign_out_button -> signOut()
         }
     }
 
@@ -81,43 +77,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun signOut() {
-        // Firebase sign out
-        auth.signOut()
-
-        // Google sign out
-        googleSignInClient?.signOut()?.addOnCompleteListener(this) {
-            updateUI(null)
-        }
-    }
-
     private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
         if (user != null) {
-            signInButton.visibility = View.GONE
-            signOutButton.visibility = View.VISIBLE
-            displayName.text = user.displayName
-
-            // If the user is new
-            if (isNewUser) {
-                val roleSelectionActivity = Intent(this, SelectRoleActivity::class.java)
-                startActivity(roleSelectionActivity)
+            val intent = when {
+                // If the user is new
+                isNewUser -> Intent(this, SelectRoleActivity::class.java)
+                // If the user is not new and a student
+                user.photoUrl.toString() == "student" -> Intent(this, StudentActivity::class.java)
+                // If the user is not new and a teacher
+                else -> Intent(this, TutorActivity::class.java)
             }
-            // If the user is not new and is a student
-            else if (user.photoUrl.toString() == "Student") {
-                val tutorsListActivity = Intent(this, TutorsListActivity::class.java)
-                startActivity(tutorsListActivity)
-            }
-            // If the user is not new and a teacher
-            else {
-                val tutorProfileActivity = Intent(this, TutorProfileActivity::class.java)
-                startActivity(tutorProfileActivity)
-            }
-        }
-
-        // If the user is not signed in
-        else {
-            signInButton.visibility = View.VISIBLE
-            signOutButton.visibility = View.GONE
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -139,9 +110,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // Get an ID token from the GoogleSignInAccount object,
-    // exchange it for a Firebase credential,
-    // and authenticate with Firebase using the Firebase credential
+    /* Get an ID token from the GoogleSignInAccount object,
+     exchange it for a Firebase credential,
+     and authenticate with Firebase using the Firebase credential */
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -149,9 +120,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential: success")
+                        val user = auth.currentUser
                         // Check if the user is new
                         val isUserNew: Boolean = task.result!!.additionalUserInfo!!.isNewUser
-                        val user = auth.currentUser
                         updateUI(user, isUserNew)
                     } else {
                         // If sign in fails, display a message to the user.
