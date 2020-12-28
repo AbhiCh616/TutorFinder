@@ -13,26 +13,33 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
-class TutorDetailsActivity: AppCompatActivity() {
+class TutorDetailsActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = TutorDetailsActivity::class.qualifiedName
     }
 
+    // Firebase firestore
+    private val db = Firebase.firestore
+
+    // Document name inside tutors collection to open
     private lateinit var docRefString: String
 
-    private val db = Firebase.firestore
+    // Reference of document to open
     private lateinit var docRef: DocumentReference
 
-    private var tutorInfo: TutorInfo? = null
-
+    // Views
     private lateinit var name: TextView
     private lateinit var profilePic: ImageView
+
+    // To store firestore document
+    private var tutorInfo: TutorInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tutor_details)
 
+        // Instantiate views
         profilePic = findViewById(R.id.profile_pic)
         name = findViewById(R.id.name)
 
@@ -40,20 +47,20 @@ class TutorDetailsActivity: AppCompatActivity() {
         docRefString = intent.getStringExtra("docRef").toString()
         docRef = db.collection("tutors").document(docRefString)
 
-        // Store document from firebase in object
         docRef.get()
-            .addOnSuccessListener { documentSnapshot ->
-                tutorInfo = documentSnapshot.toObject<TutorInfo>()
+                .addOnSuccessListener { documentSnapshot ->
+                    // Store document from firebase in object
+                    tutorInfo = documentSnapshot.toObject<TutorInfo>()
 
-                // Display name
-                name.text = tutorInfo?.name
+                    // Display name
+                    name.text = tutorInfo?.name
 
-                //Display image
-                val storage = FirebaseStorage.getInstance()
-                val gsReference = storage.getReferenceFromUrl(tutorInfo!!.profilePic)
-                GlideApp.with(profilePic.context)
-                    .load(gsReference)
-                    .into(profilePic)
-            }
+                    //Display image
+                    val storage = FirebaseStorage.getInstance()
+                    val gsReference = storage.getReferenceFromUrl(tutorInfo!!.profilePic)
+                    GlideApp.with(profilePic.context)
+                            .load(gsReference)
+                            .into(profilePic)
+                }
     }
 }
