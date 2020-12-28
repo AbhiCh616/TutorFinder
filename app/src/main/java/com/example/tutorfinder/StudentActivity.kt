@@ -31,7 +31,7 @@ class StudentActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.student_activity)
+        setContentView(R.layout.student_screen)
 
         // Set views
         bottomView = findViewById(R.id.bottom_navigation)
