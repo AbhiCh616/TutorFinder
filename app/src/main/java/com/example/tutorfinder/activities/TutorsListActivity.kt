@@ -1,4 +1,4 @@
-package com.example.tutorfinder
+package com.example.tutorfinder.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tutorfinder.R
 import com.example.tutorfinder.adapters.TutorBriefInfoAdapter
 import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

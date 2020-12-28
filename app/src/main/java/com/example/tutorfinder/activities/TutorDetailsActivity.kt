@@ -1,10 +1,11 @@
-package com.example.tutorfinder
+package com.example.tutorfinder.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tutorfinder.GlideApp
+import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore

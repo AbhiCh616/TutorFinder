@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tutorfinder.activities.TutorDetailsActivity
 import com.example.tutorfinder.adapters.TutorBriefInfoAdapter
 import com.example.tutorfinder.models.TutorInfo
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

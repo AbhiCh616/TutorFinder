@@ -1,9 +1,13 @@
-package com.example.tutorfinder
+package com.example.tutorfinder.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tutorfinder.R
+import com.example.tutorfinder.StudentChatFragment
+import com.example.tutorfinder.StudentProfileFragment
+import com.example.tutorfinder.StudentSearchFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
