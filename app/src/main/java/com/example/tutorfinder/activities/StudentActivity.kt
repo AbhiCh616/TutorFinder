@@ -23,13 +23,6 @@ class StudentActivity: AppCompatActivity() {
         private val TAG = StudentActivity::class.qualifiedName
     }
 
-    // Google sign in
-    private var googleSignInClient: GoogleSignInClient? = null
-
-    // Firebase sign in
-    private lateinit var auth: FirebaseAuth
-    private var currentUser: FirebaseUser? = null
-
     // Declare views
     private lateinit var bottomView: BottomNavigationView
 
@@ -45,18 +38,6 @@ class StudentActivity: AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, StudentSearchFragment())
             .commit()
-
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        // Initialize Firebase Auth
-        auth = Firebase.auth
     }
 
     // To change fragments according to bottom navigation
@@ -74,22 +55,4 @@ class StudentActivity: AppCompatActivity() {
 
             true
         }
-
-    override fun onStart() {
-        super.onStart()
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        currentUser = auth.currentUser
-        updateUI(currentUser)
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-        if (user == null) {
-            // If user is logged out, take them to login page
-            val loginActivityIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginActivityIntent)
-            finish()
-        }
-    }
-
 }
