@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/profile_pic"
@@ -33,11 +33,11 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:hint="@string/rate"
+        android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        android:hint="@string/rate"
-        tools:text="@string/your_name"
-        android:inputType="number"/>
+        tools:text="@string/your_name" />
 
     <EditText
         android:id="@+id/subjects"
