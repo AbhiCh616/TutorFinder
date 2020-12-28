@@ -19,9 +19,11 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         private val TAG = SelectRoleActivity::class.qualifiedName
     }
 
+    // Firebase authentication
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
 
+    // Views
     private lateinit var selectStudentButton: Button
     private lateinit var selectTeacherButton: Button
 
@@ -29,18 +31,22 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_role)
 
+        // Authentication
+        auth = Firebase.auth
+
+        // Views instantiated
         selectStudentButton = findViewById(R.id.student)
         selectTeacherButton = findViewById(R.id.teacher)
 
+        // click listener set
         selectStudentButton.setOnClickListener(this)
         selectTeacherButton.setOnClickListener(this)
-
-        auth = Firebase.auth
     }
 
     override fun onStart() {
         super.onStart()
 
+        // Get logged in user
         user = auth.currentUser
     }
 
@@ -51,11 +57,13 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // If new user is tutor
     private fun triggerTutorRegistration() {
         val tutorIntent = Intent(this, TutorRegistrationActivity::class.java)
         startActivity(tutorIntent)
     }
 
+    // If new user is student
     private fun triggerStudentRegistration() {
         // Update user profile photo to "Student"
         val profileUpdates = userProfileChangeRequest {
@@ -67,6 +75,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+        // Start student registration activity
         val studentIntent = Intent(this, StudentRegistrationActivity::class.java)
         startActivity(studentIntent)
     }

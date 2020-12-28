@@ -19,29 +19,36 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
         private val TAG = StudentRegistrationActivity::class.qualifiedName
     }
 
+    // Firebase authentication
     private lateinit var auth: FirebaseAuth
     private var user: FirebaseUser? = null
 
+    // Firebase firestore
+    private val db = Firebase.firestore
+
+    // Views
     private lateinit var nameField: EditText
     private lateinit var submitButton: Button
-
-    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.student_registration)
 
+        // Firebase authentication
+        auth = Firebase.auth
+
+        // View Instantiated
         nameField = findViewById(R.id.name)
         submitButton = findViewById(R.id.submit)
 
+        // Set on click listeners
         submitButton.setOnClickListener(this)
-
-        auth = Firebase.auth
     }
 
     override fun onStart() {
         super.onStart()
 
+        // Get current user
         user = auth.currentUser
 
         //Set name field to what we get from Google account
@@ -54,6 +61,7 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    // Save user profile data in Firestore
     private fun submitInfo() {
         val newUserInfo = hashMapOf<String, String>("name" to nameField.text.toString())
         db.collection("students")
@@ -67,8 +75,11 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
                 }
     }
 
+    // Start the student activity and clear all previous activities from stack
     private fun openNextActivity() {
-        val intent = Intent(this, TutorsListActivity::class.java)
+        val intent = Intent(this, StudentActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
 }
