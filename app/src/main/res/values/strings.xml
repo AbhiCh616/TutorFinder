@@ -10,4 +10,7 @@
     <string name="rate">Rate</string>
     <string name="subjects">Subjects</string>
     <string name="km">km</string>
+    <string name="search">Search</string>
+    <string name="chat">Chat</string>
+    <string name="profile">Profile</string>
 </resources>
