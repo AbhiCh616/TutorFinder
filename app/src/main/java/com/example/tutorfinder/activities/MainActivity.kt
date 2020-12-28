@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.qualifiedName
@@ -37,12 +37,11 @@ class MainActivity: AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         var intent: Intent
         // If user is logged out
-        if(user == null) {
+        if (user == null) {
             intent = Intent(this, LoginActivity::class.java)
-        }
-        else {
+        } else {
             // If user is student
-            if(user.photoUrl.toString() == "student") {
+            if (user.photoUrl.toString() == "student") {
                 intent = Intent(this, StudentActivity::class.java)
             }
             // If user is tutor

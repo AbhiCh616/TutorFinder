@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tutorfinder.R
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -21,8 +20,7 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Firebase authentication
-    private lateinit var auth: FirebaseAuth
-    private var user: FirebaseUser? = null
+    private val user: FirebaseUser = Firebase.auth.currentUser!!
 
     // Firebase firestore
     private val db = Firebase.firestore
@@ -35,25 +33,12 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.student_registration)
 
-        // Firebase authentication
-        auth = Firebase.auth
-
         // View Instantiated
         nameField = findViewById(R.id.name)
         submitButton = findViewById(R.id.submit)
 
         // Set on click listeners
         submitButton.setOnClickListener(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        // Get current user
-        user = auth.currentUser
-
-        //Set name field to what we get from Google account
-        nameField.setText(user?.displayName)
     }
 
     override fun onClick(v: View) {
@@ -66,7 +51,7 @@ class StudentRegistrationActivity : AppCompatActivity(), View.OnClickListener {
     private fun submitInfo() {
         val newUserInfo = hashMapOf<String, String>("name" to nameField.text.toString())
         db.collection("students")
-                .document(user!!.uid).set(newUserInfo)
+                .document(user.uid).set(newUserInfo)
                 .addOnSuccessListener {
                     Log.d(TAG, "DocumentSnapshot added.")
                     openNextActivity()

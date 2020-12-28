@@ -22,7 +22,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
 
     // Firebase authentication
     private lateinit var auth: FirebaseAuth
-    private var user: FirebaseUser? = null
+    private lateinit var user: FirebaseUser
 
     // Views
     private lateinit var selectStudentButton: Button
@@ -35,11 +35,11 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         // Authentication
         auth = Firebase.auth
 
-        // Views instantiated
+        // Instantiate views
         selectStudentButton = findViewById(R.id.student)
         selectTeacherButton = findViewById(R.id.teacher)
 
-        // click listener set
+        // set onClick listener
         selectStudentButton.setOnClickListener(this)
         selectTeacherButton.setOnClickListener(this)
     }
@@ -48,7 +48,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
 
         // Get logged in user
-        user = auth.currentUser
+        user = auth.currentUser!!
     }
 
     override fun onClick(v: View) {
@@ -58,19 +58,13 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    // If new user is tutor
-    private fun triggerTutorRegistration() {
-        val tutorIntent = Intent(this, TutorRegistrationActivity::class.java)
-        startActivity(tutorIntent)
-    }
-
-    // If new user is student
+    // If the new user is student
     private fun triggerStudentRegistration() {
-        // Update user profile photo to "Student"
+        // Update user profile photo to "student"
         val profileUpdates = userProfileChangeRequest {
-            photoUri = Uri.parse("Student")
+            photoUri = Uri.parse("student")
         }
-        user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
+        user.updateProfile(profileUpdates).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(TAG, "Student image updated.")
             }
@@ -79,5 +73,12 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
         // Start student registration activity
         val studentIntent = Intent(this, StudentRegistrationActivity::class.java)
         startActivity(studentIntent)
+    }
+
+    // If the new user is tutor
+    private fun triggerTutorRegistration() {
+        // Start tutor registration activity
+        val tutorIntent = Intent(this, TutorRegistrationActivity::class.java)
+        startActivity(tutorIntent)
     }
 }
