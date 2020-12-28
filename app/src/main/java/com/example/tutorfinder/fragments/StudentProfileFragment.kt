@@ -2,6 +2,7 @@ package com.example.tutorfinder.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class StudentProfileFragment: Fragment() {
+class StudentProfileFragment : Fragment(), View.OnClickListener {
 
     companion object {
         private val TAG = StudentProfileFragment::class.qualifiedName
@@ -32,11 +33,12 @@ class StudentProfileFragment: Fragment() {
 
     // Views
     private lateinit var signOutButton: Button
+    private lateinit var deleteAccountButton: Button
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         // Configure Google Sign In
@@ -59,9 +61,11 @@ class StudentProfileFragment: Fragment() {
 
         // Instantiate views
         signOutButton = requireView().findViewById(R.id.sign_out_button)
+        deleteAccountButton = requireView().findViewById(R.id.delete_account_button)
 
         // Set onClick listener
-        signOutButton.setOnClickListener { view -> signOut() }
+        signOutButton.setOnClickListener(this)
+        deleteAccountButton.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -71,12 +75,21 @@ class StudentProfileFragment: Fragment() {
         currentUser = auth.currentUser!!
     }
 
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.sign_out_button -> signOut()
+            R.id.delete_account_button -> deleteAccount()
+        }
+    }
+
     private fun signOut() {
         // Firebase sign out
         auth.signOut()
 
         // Google sign out
         googleSignInClient?.signOut()?.addOnCompleteListener(requireActivity()) {
+
+            // Start login activity and delete the track
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -84,5 +97,18 @@ class StudentProfileFragment: Fragment() {
         }
     }
 
+    private fun deleteAccount() {
+
+        // Delete user from firebase
+        currentUser.delete()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User account deleted.")
+
+                        // Sign out user
+                        signOut()
+                    }
+                }
+    }
 
 }
