@@ -27,6 +27,7 @@ class TutorRegistrationActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var nameField: EditText
     private lateinit var rateField: EditText
     private lateinit var subjectsField: EditText
+    private lateinit var aboutMe: EditText
     private lateinit var distanceDisplay: TextView
     private lateinit var distanceSeekBar: SeekBar
     private lateinit var submitButton: Button
@@ -51,6 +52,7 @@ class TutorRegistrationActivity : AppCompatActivity(), View.OnClickListener {
         nameField = findViewById(R.id.name)
         rateField = findViewById(R.id.rate)
         subjectsField = findViewById(R.id.subjects)
+        aboutMe = findViewById(R.id.about_me)
         distanceDisplay = findViewById(R.id.distance_display)
         distanceSeekBar = findViewById(R.id.seekBar)
         submitButton = findViewById(R.id.submit_button)
@@ -116,6 +118,7 @@ class TutorRegistrationActivity : AppCompatActivity(), View.OnClickListener {
                             "rating" to 0,
                             "subjects" to subjectsList,
                             "rate" to rateField.text.toString().toInt(),
+                            "aboutMe" to aboutMe.text.toString()
                     )
 
                     // Create document in firestore tutors collection

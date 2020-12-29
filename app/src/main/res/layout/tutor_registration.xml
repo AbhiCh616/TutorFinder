@@ -1,81 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/profile_pic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/profile_pic"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:autofillHints="name"
-        android:hint="@string/your_name"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/profile_pic"
-        app:layout_constraintTop_toBottomOf="@+id/profile_pic"
-        tools:text="@string/your_name" />
-
-    <EditText
-        android:id="@+id/rate"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/rate"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        tools:text="@string/your_name" />
-
-    <EditText
-        android:id="@+id/subjects"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:hint="@string/subjects"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/rate"
-        app:layout_constraintTop_toBottomOf="@+id/rate"
-        tools:text="@string/your_name" />
-
-    <TextView
-        android:id="@+id/distance_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="0 km"
-        app:layout_constraintStart_toStartOf="@+id/subjects"
-        app:layout_constraintTop_toBottomOf="@+id/subjects" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@+id/distance_display"
-        app:layout_constraintTop_toBottomOf="@+id/distance_display" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/submit"
-        app:layout_constraintStart_toStartOf="@+id/subjects"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+        <ImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/profile_pic"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:autofillHints="name"
+            android:hint="@string/your_name"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="@+id/profile_pic"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+            tools:text="@string/your_name" />
+
+        <EditText
+            android:id="@+id/rate"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/rate"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/name"
+            app:layout_constraintTop_toBottomOf="@+id/name"
+            tools:text="@string/your_name" />
+
+        <EditText
+            android:id="@+id/subjects"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/subjects"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="@+id/rate"
+            app:layout_constraintTop_toBottomOf="@+id/rate"
+            tools:text="@string/your_name" />
+
+        <EditText
+            android:id="@+id/about_me"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="@+id/subjects"
+            app:layout_constraintTop_toBottomOf="@+id/subjects"
+            tools:text="@string/about_me" />
+
+        <TextView
+            android:id="@+id/distance_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="0 km"
+            app:layout_constraintStart_toStartOf="@+id/subjects"
+            app:layout_constraintTop_toBottomOf="@+id/about_me" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@+id/distance_display"
+            app:layout_constraintTop_toBottomOf="@+id/distance_display" />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/submit"
+            app:layout_constraintStart_toStartOf="@+id/subjects"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
