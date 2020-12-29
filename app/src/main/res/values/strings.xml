@@ -14,4 +14,6 @@
     <string name="chat">Chat</string>
     <string name="profile">Profile</string>
     <string name="delete_account">Delete Account</string>
+    <string name="reviews">Reviews</string>
+    <string name="fee_structure">Fee Structure</string>
 </resources>
