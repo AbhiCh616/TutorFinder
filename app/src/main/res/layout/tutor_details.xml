@@ -46,7 +46,29 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/profile_pic"
             app:layout_constraintTop_toBottomOf="@+id/profile_pic"
-            tools:text="@string/your_name" />
+            tools:text="@string/about_me" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/star"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:tint="@color/yellow" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="0.0"
+            android:textColor="@color/yellow"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            tools:text="0.0" />
 
         <TextView
             android:id="@+id/textView"
@@ -65,13 +87,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="@string/fee_structure"
             android:textColor="#2B2D42"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:text="@string/fee_structure" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

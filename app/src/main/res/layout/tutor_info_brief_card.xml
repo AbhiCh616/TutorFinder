@@ -42,11 +42,11 @@
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:textColor="#F9DC5C"
+            android:layout_marginEnd="40dp"
+            android:textColor="@color/yellow"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/name"
             tools:text="@string/app_name" />
 

@@ -32,6 +32,7 @@ class TutorDetailsActivity : AppCompatActivity() {
     private lateinit var name: TextView
     private lateinit var profilePic: ImageView
     private lateinit var aboutMe: TextView
+    private lateinit var rating: TextView
 
     // To store firestore document
     private var tutorInfo: TutorInfo? = null
@@ -44,6 +45,7 @@ class TutorDetailsActivity : AppCompatActivity() {
         profilePic = findViewById(R.id.profile_pic)
         name = findViewById(R.id.name)
         aboutMe = findViewById(R.id.about_me)
+        rating = findViewById(R.id.rating)
 
         // Get firestore document reference
         docRefString = intent.getStringExtra("docRef").toString()
@@ -59,6 +61,9 @@ class TutorDetailsActivity : AppCompatActivity() {
 
                     // Display about me section
                     aboutMe.text = tutorInfo?.aboutMe
+
+                    // Display rating
+                    rating.text = tutorInfo?.rating.toString()
 
                     //Display image
                     val storage = FirebaseStorage.getInstance()
