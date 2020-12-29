@@ -60,6 +60,7 @@ class TutorDetailsActivity : AppCompatActivity() {
                     val gsReference = storage.getReferenceFromUrl(tutorInfo!!.profilePic)
                     GlideApp.with(profilePic.context)
                             .load(gsReference)
+                            .circleCrop()
                             .into(profilePic)
                 }
     }

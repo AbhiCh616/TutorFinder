@@ -15,10 +15,10 @@ import com.google.firebase.storage.FirebaseStorage
 
 class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
                             private val onItemClicked: (String) -> Unit) :
-    FirestoreRecyclerAdapter<TutorInfo, TutorBriefInfoAdapter.TutorBriefInfoViewHolder>(options) {
+        FirestoreRecyclerAdapter<TutorInfo, TutorBriefInfoAdapter.TutorBriefInfoViewHolder>(options) {
 
-    inner class TutorBriefInfoViewHolder(view : View) : RecyclerView.ViewHolder(view),
-        View.OnClickListener {
+    inner class TutorBriefInfoViewHolder(view: View) : RecyclerView.ViewHolder(view),
+            View.OnClickListener {
         val name: TextView = view.findViewById(R.id.name)
         val rating: TextView = view.findViewById(R.id.rating)
         val subjects: TextView = view.findViewById(R.id.subjects)
@@ -30,7 +30,7 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
         }
 
         override fun onClick(v: View) {
-            if(adapterPosition != RecyclerView.NO_POSITION) {
+            if (adapterPosition != RecyclerView.NO_POSITION) {
                 onItemClicked(snapshots.getSnapshot(adapterPosition).id)
             }
         }
@@ -38,14 +38,14 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TutorBriefInfoViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.tutor_info_brief_card, parent, false)
+                .inflate(R.layout.tutor_info_brief_card, parent, false)
         return TutorBriefInfoViewHolder(view)
     }
 
     override fun onBindViewHolder(
-        holder: TutorBriefInfoViewHolder,
-        position: Int,
-        model: TutorInfo
+            holder: TutorBriefInfoViewHolder,
+            position: Int,
+            model: TutorInfo
     ) {
         holder.name.text = model.name
         holder.rating.text = model.rating.toString()
@@ -58,8 +58,9 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
 
         // Display profile pic from firebase cloud
         GlideApp.with(holder.profilePic.context)
-            .load(gsReference)
-            .into(holder.profilePic)
+                .load(gsReference)
+                .circleCrop()
+                .into(holder.profilePic)
     }
 
 }
