@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tutor Finder</string>
     <string name="profile_pic">Profile Pic</string>
-    <string name="per_month">Per Month</string>
+    <string name="s_per_month">per month</string>
     <string name="sign_out">Sign Out</string>
     <string name="student">Student</string>
     <string name="tutor">Tutor</string>

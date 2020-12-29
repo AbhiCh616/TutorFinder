@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:elevation="15dp"
     app:cardCornerRadius="15dp"
     app:layout_constraintStart_toStartOf="parent"
@@ -16,10 +19,10 @@
 
         <ImageView
             android:id="@+id/profile_pic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:contentDescription="@string/profile_pic"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +32,8 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:textColor="#2B2D42"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -38,23 +41,33 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/app_name" />
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="@+id/rating"
+            app:layout_constraintEnd_toStartOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/rating"
+            app:tint="@color/yellow" />
+
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:textColor="@color/yellow"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/name"
-            tools:text="@string/app_name" />
+            tools:text="0.0" />
 
         <TextView
             android:id="@+id/subjects"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:background="@color/teal"
             android:paddingStart="10dp"
             android:paddingTop="2dp"
@@ -70,7 +83,7 @@
             android:id="@+id/rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:textColor="#2B2D42"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -82,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
-            android:text="@string/per_month"
+            android:text="@string/s_per_month"
             android:textColor="#8D99AE"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/rate"

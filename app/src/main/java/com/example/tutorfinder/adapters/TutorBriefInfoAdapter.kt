@@ -50,7 +50,7 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
         holder.name.text = model.name
         holder.rating.text = model.rating.toString()
         holder.subjects.text = model.subjects[0]
-        holder.rate.text = model.rate.toString()
+        holder.rate.text = (8377.toChar() + model.rate.toString())
 
         // Get reference of profile pic stored in firebase storage
         val storage = FirebaseStorage.getInstance()
