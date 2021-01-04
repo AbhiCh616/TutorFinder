@@ -13,9 +13,10 @@
             android:id="@+id/profile_pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:contentDescription="@string/profile_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_foreground" />
@@ -24,34 +25,61 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginTop="24dp"
             android:textColor="#2B2D42"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
-            app:layout_constraintStart_toEndOf="@+id/profile_pic"
-            app:layout_constraintTop_toTopOf="@+id/profile_pic"
-            app:layout_constraintVertical_bias="0.493"
+            app:layout_constraintEnd_toEndOf="@+id/profile_pic"
+            app:layout_constraintStart_toStartOf="@+id/profile_pic"
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic"
             tools:text="@string/your_name" />
 
         <TextView
             android:id="@+id/about_me"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
             android:textColor="#2B2D42"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/profile_pic"
-            app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name"
             tools:text="@string/about_me" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/chat"
+            app:layout_constraintEnd_toStartOf="@+id/imageView5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_me" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/bookmark_unselected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/about_me" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/star"
             app:layout_constraintStart_toStartOf="@+id/textView"
@@ -71,17 +99,28 @@
             tools:text="0.0" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="@string/review_count"
+            android:textColor="@color/kinda_grey"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rating" />
+
+        <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:text="@string/reviews"
             android:textColor="#2B2D42"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about_me"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
             tools:text="@string/reviews" />
 
         <TextView
@@ -90,7 +129,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/fee_structure"
             android:textColor="#2B2D42"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/imageView"

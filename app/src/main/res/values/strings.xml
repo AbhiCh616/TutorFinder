@@ -17,4 +17,5 @@
     <string name="reviews">Reviews</string>
     <string name="fee_structure">Fee Structure</string>
     <string name="about_me">About Me</string>
+    <string name="review_count">0 reviews</string>
 </resources>
