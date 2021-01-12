@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     // Views
     private lateinit var signInButton: SignInButton
+    private lateinit var goToSignUp: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +42,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         // Instantiate views
         signInButton = findViewById(R.id.sign_in_button)
+        goToSignUp = findViewById(R.id.go_to_sign_up)
 
         // Set onClick listener
         signInButton.setOnClickListener(this)
+        goToSignUp.setOnClickListener(this)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -69,12 +73,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sign_in_button -> signIn()
+            R.id.go_to_sign_up -> startSignUpActivity()
         }
     }
 
     private fun signIn() {
         val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    private fun startSignUpActivity() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 
     private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {

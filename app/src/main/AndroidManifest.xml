@@ -27,6 +27,8 @@
             android:noHistory="true"
             android:excludeFromRecents="true"/>
 
+        <activity android:name=".activities.SignUpActivity" />
+
         <activity android:name=".activities.SelectRoleActivity" />
 
         <activity android:name=".activities.StudentRegistrationActivity" />
