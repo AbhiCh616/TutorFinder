@@ -44,4 +44,22 @@
         app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_to_sign_up"
+        app:layout_constraintStart_toStartOf="@+id/emailSignInButton"
+        app:layout_constraintTop_toBottomOf="@+id/emailSignInButton" />
+
+    <TextView
+        android:id="@+id/go_to_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/sign_up"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

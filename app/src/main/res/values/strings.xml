@@ -21,4 +21,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
+    <string name="login_to_sign_up">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_in">Log in</string>
 </resources>
