@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -34,6 +37,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     // Views
     private lateinit var signInButton: SignInButton
+    private lateinit var email: EditText
+    private lateinit var password: EditText
+    private lateinit var emailSignInButton: Button
     private lateinit var goToSignUp: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +48,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         // Instantiate views
         signInButton = findViewById(R.id.sign_in_button)
+        email = findViewById(R.id.email)
+        password = findViewById(R.id.password)
+        emailSignInButton = findViewById(R.id.email_sign_in_button)
         goToSignUp = findViewById(R.id.go_to_sign_up)
 
         // Set onClick listener
         signInButton.setOnClickListener(this)
+        emailSignInButton.setOnClickListener(this)
         goToSignUp.setOnClickListener(this)
 
         // Configure Google Sign In
@@ -73,8 +83,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sign_in_button -> signIn()
+            R.id.email_sign_in_button -> signInUsingEmail()
             R.id.go_to_sign_up -> startSignUpActivity()
         }
+    }
+
+    private fun signInUsingEmail() {
+        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+                .addOnCompleteListener(this) { task ->
+                    if(task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        val user = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(baseContext, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                        updateUI(null)
+                    }
+                }
     }
 
     private fun signIn() {

@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
-        android:id="@+id/emailSignInButton"
+        android:id="@+id/email_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/login_to_sign_up"
-        app:layout_constraintStart_toStartOf="@+id/emailSignInButton"
-        app:layout_constraintTop_toBottomOf="@+id/emailSignInButton" />
+        app:layout_constraintStart_toStartOf="@+id/email_sign_in_button"
+        app:layout_constraintTop_toBottomOf="@+id/email_sign_in_button" />
 
     <TextView
         android:id="@+id/go_to_sign_up"
