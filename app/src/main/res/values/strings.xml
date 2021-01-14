@@ -42,4 +42,9 @@
     <string name="password_short_warning">Password must be 8 characters long!</string>
     <string name="password_format_warning">Password must contain digit, lowercase alphabet, uppercase alphabet, and a special character, without any spaces.</string>
     <string name="email_format_warning">Enter correct email address!</string>
+    <string name="enter_your_email">Enter your email address</string>
+    <string name="recovery_email_sent">Check email to recover password!</string>
+    <string name="recovery_email_failed">Wasn\'t able to send recovery email to the given email address!</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
 </resources>

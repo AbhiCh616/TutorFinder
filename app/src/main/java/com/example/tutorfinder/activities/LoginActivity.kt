@@ -1,14 +1,20 @@
 package com.example.tutorfinder.activities
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.renderscript.ScriptGroup
+import android.text.InputType
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.tutorfinder.R
@@ -43,6 +49,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     private lateinit var emailField: TextInputEditText
     private lateinit var passwordText: TextView
     private lateinit var passwordField: TextInputEditText
+    private lateinit var forgotPasswordText: TextView
     private lateinit var emailLogInButton: MaterialButton
     private lateinit var googleSignInButton: MaterialButton
     private lateinit var goToSignUpText: TextView
@@ -56,12 +63,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         emailField = findViewById(R.id.email_field)
         passwordText = findViewById(R.id.password_text)
         passwordField = findViewById(R.id.password_field)
+        forgotPasswordText = findViewById(R.id.forgot_password)
         emailLogInButton = findViewById(R.id.email_log_in_button)
         googleSignInButton = findViewById(R.id.google_log_in_button)
         goToSignUpText = findViewById(R.id.go_to_sign_up)
 
         // Set onClick listener
         googleSignInButton.setOnClickListener(this)
+        forgotPasswordText.setOnClickListener(this)
         emailLogInButton.setOnClickListener(this)
         goToSignUpText.setOnClickListener(this)
 
@@ -94,6 +103,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     override fun onClick(v: View) {
         when (v.id) {
             R.id.google_log_in_button -> signIn()
+            R.id.forgot_password -> forgotPasswordHandler()
             R.id.email_log_in_button -> signInUsingEmail()
             R.id.go_to_sign_up -> startSignUpActivity()
         }
@@ -172,6 +182,66 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         }
 
         return true;
+    }
+
+    private fun forgotPasswordHandler() {
+
+        // Dialog prompt creation to ask recovery email address
+        val builder = AlertDialog.Builder(this)
+
+        // Set dialog prompt title
+        builder.setTitle(getString(R.string.enter_your_email))
+
+        // Inflate layout from email_recovery_prompt.xml file
+        val inflatedView = LayoutInflater.from(applicationContext)
+            .inflate(R.layout.email_recovery_prompt, null)
+
+        // Get input field
+        val inputField = inflatedView.findViewById<EditText>(R.id.recovery_email_field)
+
+        // Create dialog
+        val dialog = builder.setView(inflatedView)
+            // Set up buttons inside prompt
+            .setPositiveButton(getString(R.string.send)) { _: DialogInterface, _: Int ->
+                sendRecoveryEmail(inputField.text.toString())
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.cancel()
+            }
+            .create()
+
+        // Change dialog buttons colour
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(ContextCompat.getColor(applicationContext, R.color.red))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(ContextCompat.getColor(applicationContext, R.color.green))
+        }
+
+        dialog.show()
+    }
+
+    private fun sendRecoveryEmail(emailAddress: String?) {
+        // Send recovery email to the submit email address
+        if(emailAddress != null && (emailAddress.trim()) != "") {
+            auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener{ task ->
+                    // Recovery email sent
+                    if(task.isSuccessful) {
+                        Log.d(TAG, "Email sent.");
+                        Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_sent), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.green))
+                            .show()
+                    }
+                    // Can't send recovery email
+                    else {
+                        Log.d(TAG, "Can't send recovery email")
+                        Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_failed), Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                            .show()
+                    }
+                }
+        }
     }
 
     private fun signIn() {
