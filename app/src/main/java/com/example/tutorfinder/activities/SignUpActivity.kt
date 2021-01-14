@@ -145,7 +145,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCh
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
                             val user = auth.currentUser
-                            updateUI(user)
+                            updateUI(user, isNewUser = true)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
