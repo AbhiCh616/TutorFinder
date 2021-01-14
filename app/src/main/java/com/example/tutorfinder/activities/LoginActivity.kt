@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,16 +11,17 @@ import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener {
 
     companion object {
         private const val RC_SIGN_IN: Int = 1
@@ -36,27 +35,35 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
 
     // Views
-    private lateinit var signInButton: SignInButton
-    private lateinit var email: EditText
-    private lateinit var password: EditText
-    private lateinit var emailSignInButton: Button
-    private lateinit var goToSignUp: TextView
+    private lateinit var emailText: TextView
+    private lateinit var emailField: TextInputEditText
+    private lateinit var passwordText: TextView
+    private lateinit var passwordField: TextInputEditText
+    private lateinit var emailLogInButton: MaterialButton
+    private lateinit var googleSignInButton: MaterialButton
+    private lateinit var goToSignUpText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_screen)
 
         // Instantiate views
-        signInButton = findViewById(R.id.sign_in_button)
-        email = findViewById(R.id.email)
-        password = findViewById(R.id.password)
-        emailSignInButton = findViewById(R.id.email_sign_in_button)
-        goToSignUp = findViewById(R.id.go_to_sign_up)
+        emailText = findViewById(R.id.email_text)
+        emailField = findViewById(R.id.email_field)
+        passwordText = findViewById(R.id.password_text)
+        passwordField = findViewById(R.id.password_field)
+        emailLogInButton = findViewById(R.id.email_log_in_button)
+        googleSignInButton = findViewById(R.id.google_log_in_button)
+        goToSignUpText = findViewById(R.id.go_to_sign_up)
 
         // Set onClick listener
-        signInButton.setOnClickListener(this)
-        emailSignInButton.setOnClickListener(this)
-        goToSignUp.setOnClickListener(this)
+        googleSignInButton.setOnClickListener(this)
+        emailLogInButton.setOnClickListener(this)
+        goToSignUpText.setOnClickListener(this)
+
+        // Set onFocus listener
+        emailField.onFocusChangeListener = this
+        passwordField.onFocusChangeListener = this
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -82,14 +89,44 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.sign_in_button -> signIn()
-            R.id.email_sign_in_button -> signInUsingEmail()
+            R.id.google_log_in_button -> signIn()
+            R.id.email_log_in_button -> signInUsingEmail()
             R.id.go_to_sign_up -> startSignUpActivity()
         }
     }
 
+    override fun onFocusChange(v: View, hasFocus: Boolean) {
+        when(v.id) {
+            R.id.email_field -> {
+                // When email field is in focus
+                if(hasFocus) {
+                    emailField.hint = ""
+                    emailText.visibility = View.VISIBLE
+                }
+                // When email field is not in focus
+                else {
+                    emailField.hint = getString(R.string.email)
+                    emailText.visibility = View.INVISIBLE
+                }
+            }
+
+            R.id.password_field -> {
+                // When password field is in focus
+                if(hasFocus) {
+                    passwordField.hint = ""
+                    passwordText.visibility = View.VISIBLE
+                }
+                // When password field is not in focus
+                else {
+                    passwordField.hint = getString(R.string.password)
+                    passwordText.visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
     private fun signInUsingEmail() {
-        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+        auth.signInWithEmailAndPassword(emailField.text.toString(), passwordField.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -166,9 +203,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential: failure", task.exception)
-                        Snackbar.make(signInButton, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(googleSignInButton, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                         updateUI(null)
                     }
                 }
     }
+
 }

@@ -24,4 +24,16 @@
     <string name="login_to_sign_up">Don\'t have an account?</string>
     <string name="sign_up">Sign up</string>
     <string name="log_in">Log in</string>
+    <string name="email">Email</string>
+    <string name="or">or</string>
+    <string name="google_sign_in">Google Sign In</string>
+    <string name="google_log_in">Google Log In</string>
+    <string name="forgot_password_q">Forgot Password?</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_back_e">Welcome Back!</string>
+    <string name="welcome_message">Enter your credentials to continue</string>
+    <string name="new_here_q">New Here?</string>
+    <string name="sign_up_screen_message">Let\'s get you started with account creation</string>
+    <string name="sign_up_to_log_in">Already have an account?</string>
 </resources>

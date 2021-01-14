@@ -15,14 +15,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignUpActivity: AppCompatActivity(), View.OnClickListener {
+class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener {
 
     companion object {
         private const val RC_SIGN_IN: Int = 1
@@ -36,10 +39,12 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener {
     private lateinit var auth: FirebaseAuth
 
     // Views
-    private lateinit var email: EditText
-    private lateinit var password: EditText
-    private lateinit var googleSignInButton: SignInButton
-    private lateinit var emailSignUpButton: Button
+    private lateinit var emailText: TextView
+    private lateinit var emailField: TextInputEditText
+    private lateinit var passwordText: TextView
+    private lateinit var passwordField: TextInputEditText
+    private lateinit var emailSignUpButton: MaterialButton
+    private lateinit var googleSignInButton: MaterialButton
     private lateinit var goToLogInText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +52,22 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.sign_up_screen)
 
         // Instantiate views
-        email = findViewById(R.id.email_field)
-        password = findViewById(R.id.password_field)
-        googleSignInButton = findViewById(R.id.google_sign_up_button)
+        emailText = findViewById(R.id.email_text)
+        emailField = findViewById(R.id.email_field)
+        passwordText = findViewById(R.id.password_text)
+        passwordField = findViewById(R.id.password_field)
         emailSignUpButton = findViewById(R.id.email_sign_up_button)
+        googleSignInButton = findViewById(R.id.google_sign_up_button)
         goToLogInText = findViewById(R.id.go_to_log_in_text)
 
         // Set onClick listener
         googleSignInButton.setOnClickListener(this)
         emailSignUpButton.setOnClickListener(this)
         goToLogInText.setOnClickListener(this)
+
+        // Set onFocus listener
+        emailField.onFocusChangeListener = this
+        passwordField.onFocusChangeListener = this
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -88,6 +99,36 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onFocusChange(v: View, hasFocus: Boolean) {
+        when(v.id) {
+            R.id.email_field -> {
+                // When email field is in focus
+                if(hasFocus) {
+                    emailField.hint = ""
+                    emailText.visibility = View.VISIBLE
+                }
+                // When email field is not in focus
+                else {
+                    emailField.hint = getString(R.string.email)
+                    emailText.visibility = View.INVISIBLE
+                }
+            }
+
+            R.id.password_field -> {
+                // When password field is in focus
+                if(hasFocus) {
+                    passwordField.hint = ""
+                    passwordText.visibility = View.VISIBLE
+                }
+                // When password field is not in focus
+                else {
+                    passwordField.hint = getString(R.string.password)
+                    passwordText.visibility = View.INVISIBLE
+                }
+            }
+        }
+    }
+
     private fun googleSignIn() {
         val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, SignUpActivity.RC_SIGN_IN)
@@ -95,7 +136,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener {
 
     private fun emailSignUp() {
         if(validateForm()) {
-            auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
+            auth.createUserWithEmailAndPassword(emailField.text.toString(), passwordField.text.toString())
                     .addOnCompleteListener(this) { task ->
                         if(task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information

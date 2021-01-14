@@ -12,4 +12,12 @@
     <color name="dark_teal">#457b9d</color>
     <color name="yellow">#fcbf49</color>
     <color name="kinda_grey">#8D99AE</color>
+
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#9E9E9E</color>
+
+    <color name="dark_blue">#14274e</color>
+    <color name="blue">#070d59</color>
 </resources>
