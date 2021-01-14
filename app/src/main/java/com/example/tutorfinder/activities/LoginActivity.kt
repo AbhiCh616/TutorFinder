@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.ScriptGroup
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -69,9 +65,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         goToSignUpText = findViewById(R.id.go_to_sign_up)
 
         // Set onClick listener
-        googleSignInButton.setOnClickListener(this)
         forgotPasswordText.setOnClickListener(this)
         emailLogInButton.setOnClickListener(this)
+        googleSignInButton.setOnClickListener(this)
         goToSignUpText.setOnClickListener(this)
 
         // Set onFocus listener
@@ -102,18 +98,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.google_log_in_button -> signIn()
             R.id.forgot_password -> forgotPasswordHandler()
             R.id.email_log_in_button -> signInUsingEmail()
+            R.id.google_log_in_button -> googleSignIn()
             R.id.go_to_sign_up -> startSignUpActivity()
         }
     }
 
     override fun onFocusChange(v: View, hasFocus: Boolean) {
-        when(v.id) {
+        when (v.id) {
             R.id.email_field -> {
                 // When email field is in focus
-                if(hasFocus) {
+                if (hasFocus) {
                     emailField.hint = ""
                     emailText.visibility = View.VISIBLE
                 }
@@ -126,7 +122,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
             R.id.password_field -> {
                 // When password field is in focus
-                if(hasFocus) {
+                if (hasFocus) {
                     passwordField.hint = ""
                     passwordText.visibility = View.VISIBLE
                 }
@@ -139,51 +135,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         }
     }
 
-    private fun signInUsingEmail() {
-        // Hide virtual keyboard
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(emailLogInButton.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
-
-        // If all details are inserted
-        if(validateForm()) {
-            auth.signInWithEmailAndPassword(emailField.text.toString().trim(), passwordField.text.toString().trim())
-                .addOnCompleteListener(this) { task ->
-                    if(task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success")
-                        val user = auth.currentUser
-                        updateUI(user)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Snackbar.make(emailLogInButton, R.string.authentication_failed_warning, Snackbar.LENGTH_SHORT)
-                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                            .show()
-                        updateUI(null)
-                    }
-                }
-        }
-    }
-
-    private fun validateForm(): Boolean {
-        // Email field is empty
-        if(emailField.text.toString().trim() == "") {
-            Snackbar.make(emailField, R.string.email_empty_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
-        }
-        // Password field is empty
-        else if(passwordField.text.toString().trim() == "") {
-            Snackbar.make(passwordField, R.string.password_empty_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
-        }
-
-        return true;
-    }
-
     private fun forgotPasswordHandler() {
 
         // Dialog prompt creation to ask recovery email address
@@ -194,28 +145,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
         // Inflate layout from email_recovery_prompt.xml file
         val inflatedView = LayoutInflater.from(applicationContext)
-            .inflate(R.layout.email_recovery_prompt, null)
+                .inflate(R.layout.email_recovery_prompt, null)
 
         // Get input field
         val inputField = inflatedView.findViewById<EditText>(R.id.recovery_email_field)
 
         // Create dialog
         val dialog = builder.setView(inflatedView)
-            // Set up buttons inside prompt
-            .setPositiveButton(getString(R.string.send)) { _: DialogInterface, _: Int ->
-                sendRecoveryEmail(inputField.text.toString())
-            }
-            .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
-                dialogInterface.cancel()
-            }
-            .create()
+                // Set up buttons inside prompt
+                .setPositiveButton(getString(R.string.send)) { _: DialogInterface, _: Int ->
+                    sendRecoveryEmail(inputField.text.toString())
+                }
+                .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
+                    dialogInterface.cancel()
+                }
+                .create()
 
         // Change dialog buttons colour
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                .setTextColor(ContextCompat.getColor(applicationContext, R.color.red))
+                    .setTextColor(ContextCompat.getColor(applicationContext, R.color.red))
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(ContextCompat.getColor(applicationContext, R.color.green))
+                    .setTextColor(ContextCompat.getColor(applicationContext, R.color.green))
         }
 
         dialog.show()
@@ -223,50 +174,77 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
     private fun sendRecoveryEmail(emailAddress: String?) {
         // Send recovery email to the submit email address
-        if(emailAddress != null && (emailAddress.trim()) != "") {
+        if (emailAddress != null && (emailAddress.trim()) != "") {
             auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener{ task ->
-                    // Recovery email sent
-                    if(task.isSuccessful) {
-                        Log.d(TAG, "Email sent.");
-                        Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_sent), Snackbar.LENGTH_SHORT)
-                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.green))
-                            .show()
+                    .addOnCompleteListener { task ->
+                        // Recovery email sent
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "Email sent.")
+                            Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_sent), Snackbar.LENGTH_SHORT)
+                                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.green))
+                                    .show()
+                        }
+                        // Can't send recovery email
+                        else {
+                            Log.d(TAG, "Can't send recovery email")
+                            Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_failed), Snackbar.LENGTH_SHORT)
+                                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                                    .show()
+                        }
                     }
-                    // Can't send recovery email
-                    else {
-                        Log.d(TAG, "Can't send recovery email")
-                        Snackbar.make(forgotPasswordText, getString(R.string.recovery_email_failed), Snackbar.LENGTH_SHORT)
-                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                            .show()
-                    }
-                }
         }
     }
 
-    private fun signIn() {
+    private fun signInUsingEmail() {
+        // Hide virtual keyboard
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(emailLogInButton.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+
+        // If all fields are inserted
+        if (validateForm()) {
+            // Sign in to firebase with email and password
+            auth.signInWithEmailAndPassword(emailField.text.toString().trim(), passwordField.text.toString().trim())
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success")
+                            val user = auth.currentUser
+                            updateUI(user)
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Snackbar.make(emailLogInButton, R.string.authentication_failed_warning, Snackbar.LENGTH_SHORT)
+                                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                                    .show()
+                            updateUI(null)
+                        }
+                    }
+        }
+    }
+
+    private fun validateForm(): Boolean {
+        // Email field is empty
+        if (emailField.text.toString().trim() == "") {
+            Snackbar.make(emailField, R.string.email_empty_warning, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
+        }
+
+        // Password field is empty
+        else if (passwordField.text.toString().trim() == "") {
+            Snackbar.make(passwordField, R.string.password_empty_warning, Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
+        }
+
+        return true
+    }
+
+    private fun googleSignIn() {
         val signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    private fun startSignUpActivity() {
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
-        if (user != null) {
-            val intent = when {
-                // If the user is new
-                isNewUser -> Intent(this, SelectRoleActivity::class.java)
-                // If the user is not new and a student
-                user.photoUrl.toString() == "student" -> Intent(this, StudentActivity::class.java)
-                // If the user is not new and a teacher
-                else -> Intent(this, TutorActivity::class.java)
-            }
-            startActivity(intent)
-            finish()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -308,6 +286,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                         updateUI(null)
                     }
                 }
+    }
+
+
+    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
+        if (user != null) {
+            val intent = when {
+                // If the user is new
+                isNewUser -> Intent(this, SelectRoleActivity::class.java)
+                // If the user is not new and a student
+                user.photoUrl.toString() == "student" -> Intent(this, StudentActivity::class.java)
+                // If the user is not new and a teacher
+                else -> Intent(this, TutorActivity::class.java)
+            }
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun startSignUpActivity() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 
 }

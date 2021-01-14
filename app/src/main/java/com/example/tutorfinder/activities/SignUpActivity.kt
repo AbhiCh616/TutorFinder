@@ -29,7 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener {
+class SignUpActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener {
 
     companion object {
         private const val RC_SIGN_IN: Int = 1
@@ -65,8 +65,8 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         goToLogInText = findViewById(R.id.go_to_log_in_text)
 
         // Set onClick listener
-        googleSignInButton.setOnClickListener(this)
         emailSignUpButton.setOnClickListener(this)
+        googleSignInButton.setOnClickListener(this)
         goToLogInText.setOnClickListener(this)
 
         // Set onFocus listener
@@ -96,7 +96,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.google_sign_up_button -> googleSignIn()
             R.id.email_sign_up_button -> emailSignUp()
             R.id.go_to_log_in_text -> startLogInActivity()
@@ -104,10 +104,10 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     override fun onFocusChange(v: View, hasFocus: Boolean) {
-        when(v.id) {
+        when (v.id) {
             R.id.email_field -> {
                 // When email field is in focus
-                if(hasFocus) {
+                if (hasFocus) {
                     emailField.hint = ""
                     emailText.visibility = View.VISIBLE
                 }
@@ -120,7 +120,7 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
             R.id.password_field -> {
                 // When password field is in focus
-                if(hasFocus) {
+                if (hasFocus) {
                     passwordField.hint = ""
                     passwordText.visibility = View.VISIBLE
                 }
@@ -133,20 +133,15 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         }
     }
 
-    private fun googleSignIn() {
-        val signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, SignUpActivity.RC_SIGN_IN)
-    }
-
     private fun emailSignUp() {
         // Hide virtual keyboard
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(emailSignUpButton.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
 
-        if(validateForm()) {
+        if (validateForm()) {
             auth.createUserWithEmailAndPassword(emailField.text.toString().trim(), passwordField.text.toString().trim())
                     .addOnCompleteListener(this) { task ->
-                        if(task.isSuccessful) {
+                        if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
                             val user = auth.currentUser
@@ -167,49 +162,90 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         val passwordEntered = passwordField.text.toString().trim()
 
         // Email field is empty
-        if(emailEntered == "") {
+        if (emailEntered == "") {
             Snackbar.make(emailField, R.string.email_empty_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
         }
         // Email format is wrong
-        if(!Patterns.EMAIL_ADDRESS.matcher(emailEntered).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailEntered).matches()) {
             Snackbar.make(emailField, R.string.email_format_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
         }
         // Password field is empty
-        if(passwordEntered == "") {
+        if (passwordEntered == "") {
             Snackbar.make(passwordField, R.string.password_empty_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
         }
         // Password is short
-        if(passwordEntered.length < 8) {
+        if (passwordEntered.length < 8) {
             Snackbar.make(passwordField, R.string.password_short_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
         }
         // Password must contain a digit, a lowercase alphabet, a uppercase
         // alphabet, and a special character, without any spaces.
         val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
-        if(!passwordRegex.matches(Regex(passwordEntered))) {
+        if (!passwordRegex.matches(Regex(passwordEntered))) {
             Snackbar.make(passwordField, R.string.password_format_warning, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
-                .show()
-            return false;
+                    .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                    .show()
+            return false
         }
 
         return true
     }
 
-    private fun startLogInActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+    private fun googleSignIn() {
+        val signInIntent = googleSignInClient?.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d(TAG, "firebaseAuthWithGoogle: " + account.id)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+            }
+        }
+    }
+
+    /* Get an ID token from the GoogleSignInAccount object,
+     exchange it for a Firebase credential,
+     and authenticate with Firebase using the Firebase credential */
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential: success")
+                        val user = auth.currentUser
+                        // Check if the user is new
+                        val isUserNew: Boolean = task.result!!.additionalUserInfo!!.isNewUser
+                        updateUI(user, isUserNew)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential: failure", task.exception)
+                        Snackbar.make(googleSignInButton, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                        updateUI(null)
+                    }
+                }
     }
 
     private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
@@ -227,45 +263,9 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == SignUpActivity.RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
-                Log.d(SignUpActivity.TAG, "firebaseAuthWithGoogle: " + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(SignUpActivity.TAG, "Google sign in failed", e)
-            }
-        }
-    }
-
-    /* Get an ID token from the GoogleSignInAccount object,
-     exchange it for a Firebase credential,
-     and authenticate with Firebase using the Firebase credential */
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(SignUpActivity.TAG, "signInWithCredential: success")
-                        val user = auth.currentUser
-                        // Check if the user is new
-                        val isUserNew: Boolean = task.result!!.additionalUserInfo!!.isNewUser
-                        updateUI(user, isUserNew)
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(SignUpActivity.TAG, "signInWithCredential: failure", task.exception)
-                        Snackbar.make(googleSignInButton, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                        updateUI(null)
-                    }
-                }
+    private fun startLogInActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
 }
