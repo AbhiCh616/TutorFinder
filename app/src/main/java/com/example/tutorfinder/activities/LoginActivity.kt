@@ -161,14 +161,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                 }
                 .create()
 
-        // Change dialog buttons colour
-        dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                    .setTextColor(ContextCompat.getColor(applicationContext, R.color.red))
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                    .setTextColor(ContextCompat.getColor(applicationContext, R.color.green))
-        }
-
         dialog.show()
     }
 
