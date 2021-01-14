@@ -36,4 +36,10 @@
     <string name="new_here_q">New Here?</string>
     <string name="sign_up_screen_message">Let\'s get you started with account creation</string>
     <string name="sign_up_to_log_in">Already have an account?</string>
+    <string name="email_empty_warning">Email can\'t be empty!</string>
+    <string name="password_empty_warning">Password can\'t be empty!</string>
+    <string name="authentication_failed_warning">Authentication failed!</string>
+    <string name="password_short_warning">Password must be 8 characters long!</string>
+    <string name="password_format_warning">Password must contain digit, lowercase alphabet, uppercase alphabet, and a special character, without any spaces.</string>
+    <string name="email_format_warning">Enter correct email address!</string>
 </resources>

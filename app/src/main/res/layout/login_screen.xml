@@ -98,20 +98,21 @@
         android:text="@string/forgot_password_q"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/password_field"
-        app:layout_constraintTop_toBottomOf="@+id/password_field" />
+        app:layout_constraintTop_toBottomOf="@+id/password_field"
+        android:textStyle="bold"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/email_log_in_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="80dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:text="@string/log_in"
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="@+id/password_field"
         app:layout_constraintStart_toStartOf="@+id/password_field"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/password_field" />
 
     <View
         android:id="@+id/view"

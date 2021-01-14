@@ -1,12 +1,16 @@
 package com.example.tutorfinder.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -126,7 +130,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     private fun signInUsingEmail() {
-        auth.signInWithEmailAndPassword(emailField.text.toString(), passwordField.text.toString())
+        // Hide virtual keyboard
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(emailLogInButton.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+
+        // If all details are inserted
+        if(validateForm()) {
+            auth.signInWithEmailAndPassword(emailField.text.toString().trim(), passwordField.text.toString().trim())
                 .addOnCompleteListener(this) { task ->
                     if(task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -136,11 +146,32 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                        Snackbar.make(emailLogInButton, R.string.authentication_failed_warning, Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                            .show()
                         updateUI(null)
                     }
                 }
+        }
+    }
+
+    private fun validateForm(): Boolean {
+        // Email field is empty
+        if(emailField.text.toString().trim() == "") {
+            Snackbar.make(emailField, R.string.email_empty_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+        // Password field is empty
+        else if(passwordField.text.toString().trim() == "") {
+            Snackbar.make(passwordField, R.string.password_empty_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+
+        return true;
     }
 
     private fun signIn() {

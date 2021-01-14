@@ -1,14 +1,18 @@
 package com.example.tutorfinder.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.tutorfinder.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -135,8 +139,12 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     private fun emailSignUp() {
+        // Hide virtual keyboard
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(emailSignUpButton.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+
         if(validateForm()) {
-            auth.createUserWithEmailAndPassword(emailField.text.toString(), passwordField.text.toString())
+            auth.createUserWithEmailAndPassword(emailField.text.toString().trim(), passwordField.text.toString().trim())
                     .addOnCompleteListener(this) { task ->
                         if(task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
@@ -155,6 +163,47 @@ class SignUpActivity: AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     }
 
     private fun validateForm(): Boolean {
+        val emailEntered = emailField.text.toString().trim()
+        val passwordEntered = passwordField.text.toString().trim()
+
+        // Email field is empty
+        if(emailEntered == "") {
+            Snackbar.make(emailField, R.string.email_empty_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+        // Email format is wrong
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailEntered).matches()) {
+            Snackbar.make(emailField, R.string.email_format_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+        // Password field is empty
+        if(passwordEntered == "") {
+            Snackbar.make(passwordField, R.string.password_empty_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+        // Password is short
+        if(passwordEntered.length < 8) {
+            Snackbar.make(passwordField, R.string.password_short_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+        // Password must contain a digit, a lowercase alphabet, a uppercase
+        // alphabet, and a special character, without any spaces.
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+        if(!passwordRegex.matches(Regex(passwordEntered))) {
+            Snackbar.make(passwordField, R.string.password_format_warning, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(applicationContext, R.color.red))
+                .show()
+            return false;
+        }
+
         return true
     }
 
