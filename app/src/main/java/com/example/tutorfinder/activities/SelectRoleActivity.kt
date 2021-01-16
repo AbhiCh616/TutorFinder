@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tutorfinder.R
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -25,8 +26,8 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var user: FirebaseUser
 
     // Views
-    private lateinit var selectStudentButton: Button
-    private lateinit var selectTeacherButton: Button
+    private lateinit var selectStudentButton: MaterialButton
+    private lateinit var selectTeacherButton: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

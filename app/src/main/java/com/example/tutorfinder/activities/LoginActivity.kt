@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener {
@@ -49,6 +52,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
     private lateinit var emailLogInButton: MaterialButton
     private lateinit var googleSignInButton: MaterialButton
     private lateinit var goToSignUpText: TextView
+
+    // Firebase Firestore
+    private lateinit var rootRef: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +91,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
 
         // Initialize Firebase Auth
         auth = Firebase.auth
+
+        // Firebase Firestore
+        rootRef = FirebaseFirestore.getInstance()
     }
 
     override fun onStart() {
@@ -268,9 +277,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential: success")
                         val user = auth.currentUser
-                        // Check if the user is new
-                        val isUserNew: Boolean = task.result!!.additionalUserInfo!!.isNewUser
-                        updateUI(user, isUserNew)
+                        updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential: failure", task.exception)
@@ -280,19 +287,43 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusCha
                 }
     }
 
-
-    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean = false) {
+    private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
-            val intent = when {
-                // If the user is new
-                isNewUser -> Intent(this, SelectRoleActivity::class.java)
-                // If the user is not new and a student
-                user.photoUrl.toString() == "student" -> Intent(this, StudentActivity::class.java)
-                // If the user is not new and a teacher
-                else -> Intent(this, TutorActivity::class.java)
-            }
-            startActivity(intent)
-            finish()
+            val docRefInStudent = rootRef.collection("students").document(user.uid)
+            docRefInStudent.get()
+                    .addOnCompleteListener { task: Task<DocumentSnapshot> ->
+                        if (task.isSuccessful) {
+                            val doc = task.result
+                            if (doc!!.exists()) {
+                                // User is already registered student, launch student activity
+                                val intent = Intent(this, StudentActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                // User is not a registered student, check if it is a registered teacher
+                                val docRefInTutor = rootRef.collection("tutors").document(user.uid)
+                                docRefInTutor.get()
+                                        .addOnCompleteListener { task2: Task<DocumentSnapshot> ->
+                                            if (task2.isSuccessful) {
+                                                val doc2 = task2.result
+                                                if (doc2!!.exists()) {
+                                                    // User is already registered tutor
+                                                    // take them to tutor activity
+                                                    val intent = Intent(this, TutorActivity::class.java)
+                                                    startActivity(intent)
+                                                    finish()
+                                                } else {
+                                                    // User is not a registered tutor, it is a new user
+                                                    // start their registration
+                                                    val intent = Intent(this, SelectRoleActivity::class.java)
+                                                    startActivity(intent)
+                                                    finish()
+                                                }
+                                            }
+                                        }
+                            }
+                        }
+                    }
         }
     }
 

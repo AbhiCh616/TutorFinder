@@ -47,4 +47,6 @@
     <string name="recovery_email_failed">Wasn\'t able to send recovery email to the given email address!</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
+    <string name="select_role_screen_heading">What describes you the best?</string>
+    <string name="registration_just_few_more_steps">Just few more steps to get you registered</string>
 </resources>
