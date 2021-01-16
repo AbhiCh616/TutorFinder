@@ -49,4 +49,5 @@
     <string name="cancel">Cancel</string>
     <string name="select_role_screen_heading">What describes you the best?</string>
     <string name="registration_just_few_more_steps">Just few more steps to get you registered</string>
+    <string name="not">Not</string>
 </resources>
