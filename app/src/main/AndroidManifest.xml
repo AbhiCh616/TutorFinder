@@ -33,6 +33,7 @@
 
         <activity android:name=".activities.StudentRegistrationActivity" />
 
+        <activity android:name=".activities.TutorRegistration"/>
         <activity android:name=".activities.TutorRegistrationActivity"/>
 
         <activity android:name=".activities.TutorDetailsActivity"/>

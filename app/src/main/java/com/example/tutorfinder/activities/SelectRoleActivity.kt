@@ -104,7 +104,7 @@ class SelectRoleActivity : AppCompatActivity(), View.OnClickListener {
     // If the new user is tutor
     private fun triggerTutorRegistration() {
         // Start tutor registration activity
-        val tutorIntent = Intent(this, TutorRegistrationActivity::class.java)
+        val tutorIntent = Intent(this, TutorRegistration::class.java)
         startActivity(tutorIntent)
     }
 
