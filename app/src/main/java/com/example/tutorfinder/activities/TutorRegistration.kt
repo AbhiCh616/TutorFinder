@@ -10,7 +10,7 @@ import com.example.tutorfinder.fragments.TutorRegLocation
 import com.example.tutorfinder.fragments.TutorRegSubject
 import com.google.android.material.imageview.ShapeableImageView
 
-class TutorRegistration : AppCompatActivity(), View.OnClickListener {
+class TutorRegistration: AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private val TAG = TutorRegistration::class.qualifiedName
@@ -18,7 +18,7 @@ class TutorRegistration : AppCompatActivity(), View.OnClickListener {
 
     // Manage Fragments
     private var presentFragmentNumber: Int = 0
-    private val fragmentList = listOf<Fragment>(TutorRegSubject(), TutorRegBasicInfo(), TutorRegLocation())
+    private val fragmentList = listOf<Fragment>(TutorRegBasicInfo(), TutorRegLocation(), TutorRegSubject())
 
     // Views
     private lateinit var nextButton: ShapeableImageView
@@ -38,16 +38,17 @@ class TutorRegistration : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
+        when(v.id) {
             R.id.next_button -> changeFragment()
         }
     }
 
     private fun changeFragment() {
         // If we are not at the last fragment of the list
-        if (++presentFragmentNumber < fragmentList.size) {
+        if(++presentFragmentNumber < fragmentList.size) {
             startFragment(presentFragmentNumber)
-        } else {
+        }
+        else {
             --presentFragmentNumber
         }
     }
@@ -61,7 +62,7 @@ class TutorRegistration : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         // If we are on the first fragment, go to previous activity
-        if (presentFragmentNumber == 0) {
+        if(presentFragmentNumber == 0) {
             super.onBackPressed()
         }
         // Go to previous fragment

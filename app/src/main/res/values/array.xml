@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="per_array">
-        <item>month</item>
-        <item>day</item>
-        <item>hour</item>
-    </string-array>
-</resources>

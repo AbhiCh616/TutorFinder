@@ -60,8 +60,4 @@
     <string name="_0_km">0.0 km</string>
     <string name="location_collection_declaration">The app need access to your current location once to determine where you live.</string>
     <string name="rotate_slider_use">How far are you willing to travel from this location to reach your students?</string>
-    <string name="ask_sub_to_teach">Which subjects you would like to teach?</string>
-    <string name="ask_payment_tutor">How much would you charge?</string>
-    <string name="curr">curr</string>
-    <string name="per">per</string>
 </resources>
