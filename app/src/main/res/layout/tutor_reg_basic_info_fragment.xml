@@ -22,6 +22,7 @@
         android:layout_width="152dp"
         android:layout_height="152dp"
         android:layout_marginTop="48dp"
+        android:tint="@color/blue"
         android:src="@drawable/profile_pic_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
