@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/ask_sub_to_teach"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/ask_payment_tutor"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView6" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/currency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/curr"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/materialTextView7"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView7" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textInputEditText2"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/rounded_edit_text"
+        android:backgroundTint="@color/grey_200"
+        android:inputType="number"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/currency_text"
+        app:layout_constraintStart_toEndOf="@+id/currency_text"
+        app:layout_constraintTop_toTopOf="@+id/currency_text" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/materialTextView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/per"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputEditText2"
+        app:layout_constraintStart_toEndOf="@+id/textInputEditText2"
+        app:layout_constraintTop_toTopOf="@+id/textInputEditText2" />
+
+    <Spinner
+        android:id="@+id/per_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/spinner_default"
+        android:popupBackground="@drawable/spinner_popup"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/materialTextView9"
+        app:layout_constraintStart_toEndOf="@+id/materialTextView9"
+        app:layout_constraintTop_toTopOf="@+id/materialTextView9"
+        tools:listitem="@android:layout/activity_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
