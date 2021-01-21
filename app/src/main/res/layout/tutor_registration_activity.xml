@@ -23,6 +23,7 @@
         android:tint="?colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
