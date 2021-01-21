@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView3"
+        android:id="@+id/distance_animation"
         android:layout_width="152dp"
         android:layout_height="152dp"
         android:layout_marginTop="48dp"
@@ -39,7 +39,7 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shapeableImageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/distance_animation" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textInputEditText"
