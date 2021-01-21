@@ -49,17 +49,18 @@
         android:background="@drawable/rounded_edit_text"
         android:backgroundTint="@color/grey_200"
         android:hint="@string/age"
+        android:inputType="number"
         android:padding="16dp"
         android:paddingBottom="16dp"
         app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        android:inputType="number"/>
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/gender_male_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="@color/grey_500"
         android:padding="16dp"
         android:text="@string/male"
         android:textAllCaps="false"
@@ -71,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:backgroundTint="@color/grey_500"
         android:padding="16dp"
         android:text="@string/female"
         android:textAllCaps="false"
@@ -82,6 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:backgroundTint="@color/grey_500"
         android:padding="16dp"
         android:text="@string/other"
         android:textAllCaps="false"
@@ -96,8 +99,8 @@
         android:layout_marginBottom="24dp"
         android:text="@string/next"
         android:textAllCaps="false"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
