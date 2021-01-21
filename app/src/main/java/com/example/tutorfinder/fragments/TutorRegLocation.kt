@@ -11,7 +11,7 @@ import com.google.android.material.textview.MaterialTextView
 import me.tankery.lib.circularseekbar.CircularSeekBar
 import java.text.DecimalFormat
 
-class TutorLocationRegFragment : Fragment() {
+class TutorRegLocation : Fragment() {
 
     // Views
     private lateinit var slider: CircularSeekBar

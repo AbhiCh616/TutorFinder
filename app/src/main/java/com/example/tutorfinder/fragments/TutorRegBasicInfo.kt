@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
 import com.google.android.material.button.MaterialButton
 
-class TutorBasicInfoRegFragment : Fragment(), View.OnClickListener {
+class TutorRegBasicInfo : Fragment(), View.OnClickListener {
 
     private lateinit var genderMaleButton: MaterialButton
     private lateinit var genderFemaleButton: MaterialButton

@@ -5,9 +5,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
-import com.example.tutorfinder.fragments.TutorBasicInfoRegFragment
-import com.example.tutorfinder.fragments.TutorLocationRegFragment
-import com.google.android.material.button.MaterialButton
+import com.example.tutorfinder.fragments.TutorRegBasicInfo
+import com.example.tutorfinder.fragments.TutorRegLocation
+import com.example.tutorfinder.fragments.TutorRegSubject
 import com.google.android.material.imageview.ShapeableImageView
 
 class TutorRegistration: AppCompatActivity(), View.OnClickListener {
@@ -18,7 +18,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener {
 
     // Manage Fragments
     private var presentFragmentNumber: Int = 0
-    private val fragmentList = listOf<Fragment>(TutorBasicInfoRegFragment(), TutorLocationRegFragment())
+    private val fragmentList = listOf<Fragment>(TutorRegBasicInfo(), TutorRegLocation(), TutorRegSubject())
 
     // Views
     private lateinit var nextButton: ShapeableImageView
