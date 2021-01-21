@@ -18,7 +18,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener {
 
     // Manage Fragments
     private var presentFragmentNumber: Int = 0
-    private val fragmentList = listOf<Fragment>(TutorRegBasicInfo(), TutorRegLocation(), TutorRegSubject())
+    private val fragmentList = listOf<Fragment>(TutorRegSubject(), TutorRegBasicInfo(), TutorRegLocation())
 
     // Views
     private lateinit var nextButton: ShapeableImageView

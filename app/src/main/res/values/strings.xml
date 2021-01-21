@@ -64,4 +64,10 @@
     <string name="ask_payment_tutor">How much would you charge?</string>
     <string name="curr">curr</string>
     <string name="per">per</string>
+
+    <string-array name="per_array">
+        <item>month</item>
+        <item>day</item>
+        <item>hour</item>
+    </string-array>
 </resources>
