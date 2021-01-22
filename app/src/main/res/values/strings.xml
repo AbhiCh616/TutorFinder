@@ -68,6 +68,9 @@
     <string name="enter_subject">Enter a single subject</string>
     <string name="ok">Okay</string>
     <string name="disclamer_subject">Only add a single thing, without any space!</string>
+    <string name="subject_space_warning">Entered value can\'t contain space.</string>
+    <string name="subject_alpha_warning">Subject can\'t contain anything other than alphabets.</string>
+    <string name="subject_already_warning">Subject is already selected.</string>
 
     <string-array name="per_array">
         <item>month</item>

@@ -2,17 +2,19 @@ package com.example.tutorfinder.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 import java.util.*
+import java.util.regex.Pattern
 
 class TutorRegSubject : Fragment(), View.OnClickListener {
 
@@ -23,12 +25,12 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
     private lateinit var perSpinner: Spinner
 
     // To store subjects view
-    private val subjectsViewList: MutableList<String> = mutableListOf()
+    private val subjectNameList: MutableList<String> = mutableListOf()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.tutor_reg_subject, container, false)
     }
@@ -50,9 +52,9 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
 
         // Set up spinner
         ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.per_array,
-            R.layout.item_per
+                requireContext(),
+                R.array.per_array,
+                R.layout.item_per
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(R.layout.item_per_dropdown)
@@ -70,7 +72,7 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
         subjectFlexBox.removeAllViews()
 
         // Inflate all the subject views
-        for(subjectName in subjectsViewList) {
+        for (subjectName in subjectNameList) {
             val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
             val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
             textBox.text = subjectName
@@ -94,35 +96,61 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
 
         // Inflate layout for content of dialog box
         val inflatedView = LayoutInflater.from(requireContext().applicationContext)
-            .inflate(R.layout.add_subject_prompt, null)
+                .inflate(R.layout.add_subject_prompt, null)
 
         // Get input field
         val inputField = inflatedView.findViewById<EditText>(R.id.subject_field)
 
         // Create dialog
         val dialog = builder.setView(inflatedView)
-            // Set up buttons inside prompt
-            .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
-                addSubjectToScreen(inputField.text.toString())
-            }
-            .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
-                dialogInterface.cancel()
-            }
-            .create()
+                // Set up buttons inside prompt
+                .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
+                    addSubjectToScreen(inputField.text.toString().trim().toLowerCase(Locale.ROOT))
+                }
+                .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
+                    dialogInterface.cancel()
+                }
+                .create()
 
         dialog.show()
 
     }
 
     private fun addSubjectToScreen(subjectName: String) {
+
+        // String contains space
+        if (subjectName.contains(' ')) {
+            Snackbar.make(addSubjectButton, getString(R.string.subject_space_warning), Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return
+        }
+
+        // String contains anything other than a-z
+        if (!Pattern.matches("[a-z]+", subjectName)) {
+            Snackbar.make(addSubjectButton, getString(R.string.subject_alpha_warning), Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return
+        }
+
+        // Subject is already selected
+        if (subjectNameList.contains(subjectName)) {
+            Snackbar.make(addSubjectButton, getString(R.string.subject_already_warning), Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return
+        }
+
         val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
         val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
         textBox.text = subjectName
         subjectFlexBox.addView(child)
 
         // Add subject view to list
-        subjectsViewList.add(subjectName)
+        subjectNameList.add(subjectName)
     }
+
 
     // Return the currency of current locale
     private fun getCurrencySymbol(): CharSequence? {
