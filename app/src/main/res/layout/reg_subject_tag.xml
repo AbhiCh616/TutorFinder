@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text_box"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    tools:text="@string/your_name"
-    android:textSize="16sp"
-    android:textColor="@color/black"
     android:background="@drawable/full_rounded_rectangle"
-    android:backgroundTint="@color/grey_200" />
+    android:backgroundTint="@color/grey_200"
+    android:orientation="horizontal">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/your_name"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:id="@+id/text_box"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/add_icon_24"
+        android:rotation="45"
+        android:layout_marginStart="12dp"/>
+
+</LinearLayout>
