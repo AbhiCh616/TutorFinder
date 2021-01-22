@@ -65,6 +65,8 @@
     <string name="curr">curr</string>
     <string name="per">per</string>
     <string name="add_subject">Add new subject</string>
+    <string name="enter_subject">Enter a single subject</string>
+    <string name="ok">Okay</string>
 
     <string-array name="per_array">
         <item>month</item>
