@@ -22,6 +22,9 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
     private lateinit var currencyText: MaterialTextView
     private lateinit var perSpinner: Spinner
 
+    // To store subjects view
+    private val subjectsViewList: MutableList<String> = mutableListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,6 +60,22 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
             perSpinner.adapter = adapter
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // To ensure that if device is locked at this screen and unlocked again
+        // flexbox wouldn't have duplicate views
+        subjectFlexBox.removeAllViews()
+
+        // Inflate all the subject views
+        for(subjectName in subjectsViewList) {
+            val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
+            val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
+            textBox.text = subjectName
+            subjectFlexBox.addView(child)
+        }
     }
 
     override fun onClick(v: View) {
@@ -100,6 +119,9 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
         val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
         textBox.text = subjectName
         subjectFlexBox.addView(child)
+
+        // Add subject view to list
+        subjectsViewList.add(subjectName)
     }
 
     // Return the currency of current locale
