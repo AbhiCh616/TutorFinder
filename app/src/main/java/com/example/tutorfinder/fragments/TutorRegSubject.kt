@@ -2,6 +2,7 @@ package com.example.tutorfinder.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,17 +74,27 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
 
         // Inflate all the subject views
         for (subjectName in subjectNameList) {
-            val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
-            val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
-            textBox.text = subjectName
-            subjectFlexBox.addView(child)
+            createTagOnScreen(subjectName)
         }
     }
 
     override fun onClick(v: View) {
+        when(v.tag) {
+            "subject_tag" -> deleteTag(v)
+        }
+
         when (v.id) {
             R.id.add_subject_text -> addSubject()
         }
+    }
+
+    private fun deleteTag(v: View) {
+        // Remove text from subject list
+        val textView = v.findViewById<TextView>(R.id.text_box)
+        subjectNameList.remove(textView.text)
+
+        // Remove the tag from screen
+        subjectFlexBox.removeView(v)
     }
 
     private fun addSubject() {
@@ -142,13 +153,20 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
             return
         }
 
-        val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
-        val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
-        textBox.text = subjectName
-        subjectFlexBox.addView(child)
+        // Add subject view to flexbox
+        createTagOnScreen(subjectName)
 
         // Add subject view to list
         subjectNameList.add(subjectName)
+    }
+
+    private fun createTagOnScreen(subjectName: String) {
+        val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
+        child.tag = "subject_tag"
+        child.setOnClickListener(this)
+        val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
+        textBox.text = subjectName
+        subjectFlexBox.addView(child)
     }
 
 
