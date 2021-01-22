@@ -18,7 +18,21 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/selectableItemBackground" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/add_subject_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/add_subject"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView6"
+        android:textStyle="bold"/>
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/subjects_flex_box"
@@ -30,7 +44,7 @@
         app:flexWrap="wrap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView6" />
+        app:layout_constraintTop_toBottomOf="@+id/add_subject_text" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView7"

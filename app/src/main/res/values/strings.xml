@@ -64,6 +64,7 @@
     <string name="ask_payment_tutor">How much would you charge?</string>
     <string name="curr">curr</string>
     <string name="per">per</string>
+    <string name="add_subject">Add new subject</string>
 
     <string-array name="per_array">
         <item>month</item>
