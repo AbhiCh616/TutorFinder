@@ -84,7 +84,7 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
         val dialog = builder.setView(inflatedView)
             // Set up buttons inside prompt
             .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
-
+                addSubjectToScreen(inputField.text.toString())
             }
             .setNegativeButton(getString(R.string.cancel)) { dialogInterface: DialogInterface, _: Int ->
                 dialogInterface.cancel()
@@ -93,6 +93,13 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
 
         dialog.show()
 
+    }
+
+    private fun addSubjectToScreen(subjectName: String) {
+        val child = layoutInflater.inflate(R.layout.reg_subject_tag, null)
+        val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
+        textBox.text = subjectName
+        subjectFlexBox.addView(child)
     }
 
     // Return the currency of current locale
