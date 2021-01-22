@@ -21,6 +21,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:drawableStart="@drawable/add_icon_24"
+        android:drawablePadding="8dp"
         android:id="@+id/add_subject_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +31,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:text="@string/add_subject"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialTextView6" />
