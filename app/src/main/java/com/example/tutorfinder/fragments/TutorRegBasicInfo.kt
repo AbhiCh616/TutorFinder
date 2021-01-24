@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
+import com.example.tutorfinder.utils.Gender
 import com.google.android.material.button.MaterialButton
 
 class TutorRegBasicInfo : Fragment(), View.OnClickListener {
@@ -17,7 +18,6 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener {
     private lateinit var genderOtherButton: MaterialButton
 
     // To store user input
-    private enum class Gender {Male, Female, Other}
     private var gender: Gender? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
