@@ -1,19 +1,25 @@
 package com.example.tutorfinder.fragments
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.tutorfinder.R
+import com.example.tutorfinder.activities.TutorRegistrationActivity
 import com.example.tutorfinder.interfaces.BasicInfoListener
 import com.example.tutorfinder.interfaces.SetAllEntries
 import com.example.tutorfinder.utils.Gender
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
@@ -21,9 +27,11 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
 
     companion object {
         private val TAG = TutorRegBasicInfo::class.qualifiedName
+        private const val PICK_IMAGE_REQUEST = 1
     }
 
     // Views
+    private lateinit var profilePic: ShapeableImageView
     private lateinit var name: TextInputEditText
     private lateinit var age: TextInputEditText
     private lateinit var genderMaleButton: MaterialButton
@@ -31,6 +39,7 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
     private lateinit var genderOtherButton: MaterialButton
 
     // To store user input
+    private var profilePicUri: Uri? = null
     private var gender: Gender? = null
 
     // To send data to Activity
@@ -44,6 +53,7 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
         super.onViewCreated(view, savedInstanceState)
 
         // Instantiate views
+        profilePic = requireActivity().findViewById(R.id.profile_pic)
         name = requireActivity().findViewById(R.id.name)
         age = requireActivity().findViewById(R.id.age)
         genderMaleButton = requireActivity().findViewById(R.id.gender_male_button)
@@ -51,6 +61,7 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
         genderOtherButton = requireActivity().findViewById(R.id.gender_other_button)
 
         // Set onClick listeners
+        profilePic.setOnClickListener(this)
         genderMaleButton.setOnClickListener(this)
         genderFemaleButton.setOnClickListener(this)
         genderOtherButton.setOnClickListener(this)
@@ -86,6 +97,7 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
 
     // To be called from Activity
     override fun setAllEntries() {
+        listener?.setProfilePicUri(profilePicUri)
         listener?.setName(name.text.toString())
         listener?.setAge(age.text.toString().toInt())
         listener?.setGender(gender)
@@ -96,6 +108,15 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
         val nameValue = name.text.toString()
         val ageValue = age.text.toString()
         val genderValue = gender
+        // Profile pic is not selected
+        if(profilePicUri == null) {
+            Snackbar.make(requireView().findViewById(R.id.next_button),
+                    getString(R.string.profile_pic_error),
+                    Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return false
+        }
         // Name field is empty
         if(nameValue.trim() == "") {
             Snackbar.make(requireView().findViewById(R.id.next_button),
@@ -128,9 +149,32 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.profile_pic -> selectImage()
             R.id.gender_male_button -> selectGenderMale()
             R.id.gender_female_button -> selectGenderFemale()
             R.id.gender_other_button -> selectGenderOther()
+        }
+    }
+
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // If result is of picking image request
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK &&
+                data != null && data.data != null) {
+            profilePicUri = data.data
+
+            // Set profile pic on screen to selected image
+            Glide.with(this)
+                    .load(profilePicUri)
+                    .into(profilePic)
         }
     }
 

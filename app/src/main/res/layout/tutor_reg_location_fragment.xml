@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/materialTextView5" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/distance_animation"
+        android:id="@+id/profile_pic"
         android:layout_width="168dp"
         android:layout_height="168dp"
         android:tint="?colorPrimary"

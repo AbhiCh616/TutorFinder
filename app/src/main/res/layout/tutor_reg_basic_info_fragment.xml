@@ -18,11 +18,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/distance_animation"
+        android:id="@+id/profile_pic"
         android:layout_width="152dp"
         android:layout_height="152dp"
         android:layout_marginTop="48dp"
-        android:tint="@color/blue"
         android:src="@drawable/profile_pic_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +40,7 @@
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/distance_animation" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/age"

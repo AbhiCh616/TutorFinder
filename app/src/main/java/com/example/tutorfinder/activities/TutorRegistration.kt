@@ -1,5 +1,6 @@
 package com.example.tutorfinder.activities
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,6 +32,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
     private lateinit var nextButton: ShapeableImageView
 
     // User info
+    private var profilePicUri: Uri? = null
     private var name: String? = null
     private var age: Int? = null
     private var gender: Gender? = null
@@ -77,7 +79,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
             Log.e(TAG, TAG + " is not of type " + SetAllEntries::class.qualifiedName)
         }
 
-        Log.d(TAG, name + " " + age + " " + gender.toString() + " " + distance + " " + subjects.toString()
+        Log.d(TAG, profilePicUri.toString() + " " + name + " " + age + " " + gender.toString() + " " + distance + " " + subjects.toString()
         + " " + cost + " " + perCostFactor.toString() + " " + aboutMe + " " + education + " " + experience)
 
         // If we are not at the last fragment of the list
@@ -107,7 +109,9 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    // Interface implementations
+    override fun setProfilePicUri(profilePicUri: Uri?) {
+        this.profilePicUri = profilePicUri
+    }
     override fun setName(name: String?) {
         this.name = name
     }

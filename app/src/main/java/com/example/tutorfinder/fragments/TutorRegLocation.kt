@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
-import com.example.tutorfinder.interfaces.BasicInfoListener
 import com.example.tutorfinder.interfaces.DistanceListener
 import com.example.tutorfinder.interfaces.SetAllEntries
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 import me.tankery.lib.circularseekbar.CircularSeekBar
-import java.text.DecimalFormat
 
 class TutorRegLocation : Fragment(), SetAllEntries {
 
@@ -45,7 +43,7 @@ class TutorRegLocation : Fragment(), SetAllEntries {
 
         // Views initiated
         slider = requireView().findViewById(R.id.distance_slider)
-        distanceAnimationImage = requireView().findViewById(R.id.distance_animation)
+        distanceAnimationImage = requireView().findViewById(R.id.profile_pic)
         distanceText = requireView().findViewById(R.id.distance_text)
 
         // Set on change listener
