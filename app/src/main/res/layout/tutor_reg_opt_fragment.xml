@@ -34,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText4"
+            android:id="@+id/about_field"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="24dp"
@@ -57,10 +57,10 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEditText4" />
+            app:layout_constraintTop_toBottomOf="@+id/about_field" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText3"
+            android:id="@+id/education_field"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="24dp"
@@ -83,10 +83,10 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputEditText3" />
+            app:layout_constraintTop_toBottomOf="@+id/education_field" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText5"
+            android:id="@+id/experience_field"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="24dp"

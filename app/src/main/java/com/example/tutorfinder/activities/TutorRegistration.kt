@@ -10,16 +10,13 @@ import com.example.tutorfinder.fragments.TutorRegBasicInfo
 import com.example.tutorfinder.fragments.TutorRegLocation
 import com.example.tutorfinder.fragments.TutorRegOptionalFragment
 import com.example.tutorfinder.fragments.TutorRegSubject
-import com.example.tutorfinder.interfaces.BasicInfoListener
-import com.example.tutorfinder.interfaces.DistanceListener
-import com.example.tutorfinder.interfaces.SetAllEntries
-import com.example.tutorfinder.interfaces.SubjectListener
+import com.example.tutorfinder.interfaces.*
 import com.example.tutorfinder.utils.Gender
 import com.example.tutorfinder.utils.PerCostFactor
 import com.google.android.material.imageview.ShapeableImageView
 
 class TutorRegistration: AppCompatActivity(), View.OnClickListener,
-        BasicInfoListener, DistanceListener, SubjectListener {
+        BasicInfoListener, DistanceListener, SubjectListener, TutorRegOptionalListener {
 
     companion object {
         private val TAG = TutorRegistration::class.qualifiedName
@@ -27,7 +24,8 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
 
     // Manage Fragments
     private var presentFragmentNumber: Int = 0
-    private val fragmentList = listOf<Fragment>(TutorRegBasicInfo(), TutorRegLocation(), TutorRegSubject(), TutorRegOptionalFragment())
+    private val fragmentList = listOf<Fragment>(TutorRegBasicInfo(), TutorRegLocation(),
+            TutorRegSubject(), TutorRegOptionalFragment())
 
     // Views
     private lateinit var nextButton: ShapeableImageView
@@ -40,6 +38,9 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
     private var subjects: List<String>? = null
     private var cost: Int? = null
     private var perCostFactor: PerCostFactor? = null
+    private var aboutMe: String? = null
+    private var education: String? = null
+    private var experience: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
         }
 
         Log.d(TAG, name + " " + age + " " + gender.toString() + " " + distance + " " + subjects.toString()
-        + " " + cost + " " + perCostFactor.toString())
+        + " " + cost + " " + perCostFactor.toString() + " " + aboutMe + " " + education + " " + experience)
 
         // If we are not at the last fragment of the list
         if(++presentFragmentNumber < fragmentList.size) {
@@ -127,6 +128,15 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener,
     }
     override fun setCostFactor(perCostFactor: PerCostFactor) {
         this.perCostFactor = perCostFactor
+    }
+    override fun setAbout(about: String) {
+        this.aboutMe = about
+    }
+    override fun setEducation(education: String) {
+        this.education = education
+    }
+    override fun setExperience(experience: String) {
+        this.experience = experience
     }
 
 }
