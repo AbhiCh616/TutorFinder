@@ -1,6 +1,7 @@
 package com.example.tutorfinder.activities
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
@@ -23,6 +24,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 
 class TutorRegistration : AppCompatActivity(), View.OnClickListener,
@@ -61,6 +67,15 @@ class TutorRegistration : AppCompatActivity(), View.OnClickListener,
     private var latitude: Double? = null
     private var longitude: Double? = null
 
+    // Firebase authentication
+    private var user: FirebaseUser = Firebase.auth.currentUser!!
+
+    // Firebase firestore
+    private val db = Firebase.firestore
+
+    // Firebase cloud storage
+    private val storageReference = Firebase.storage.reference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tutor_registration_activity)
@@ -97,28 +112,78 @@ class TutorRegistration : AppCompatActivity(), View.OnClickListener,
             Log.e(TAG, TAG + " is not of type " + SetAllEntries::class.qualifiedName)
         }
 
-        Log.d(
-            TAG, profilePicUri.toString() + " " + name + " " + age + " "
-                    + gender.toString() + " " + distance + " " + subjects.toString()
-                    + " " + cost + " " + perCostFactor.toString() + " " + aboutMe + " "
-                    + education + " " + experience + " " + latitude + " " + longitude
-        )
+
 
         // If we are not at the last fragment of the list
         if (++presentFragmentNumber < fragmentList.size) {
             startFragment(presentFragmentNumber)
+
+            // If on location page, get location permission
+            if (fragmentList[presentFragmentNumber] is TutorRegLocation) {
+                getLocationPermission()
+            }
+            // If on last page, set location
+            if(presentFragmentNumber == fragmentList.size - 1) {
+                setLocation()
+            }
+
+            Log.d(
+                    TAG, profilePicUri.toString() + " " + name + " " + age + " "
+                    + gender.toString() + " " + distance + " " + subjects.toString()
+                    + " " + cost + " " + perCostFactor.toString() + " " + aboutMe + " "
+                    + education + " " + experience + " " + latitude + " " + longitude
+            )
+
         } else {
-            --presentFragmentNumber
+            registerTutor()
         }
 
-        // If on location page, get location permission
-        if (fragmentList[presentFragmentNumber] is TutorRegLocation) {
-            getLocationPermission()
-        }
-        // If on last page, set location
-        if(presentFragmentNumber == fragmentList.size - 1) {
-            setLocation()
-        }
+    }
+
+    private fun registerTutor() {
+        // Upload image to firebase cloud storage
+        val profilePicReference = storageReference.child(user.uid)
+        profilePicReference.putFile(profilePicUri!!)
+                .addOnSuccessListener {
+
+                    // Set data to create document
+                    val newUserInfo = hashMapOf(
+                            "profilePic" to "gs://tutor-finder-f8d8d.appspot.com/" + user.uid,
+                            "name" to name,
+                            "age" to age,
+                            "gender" to gender.toString(),
+                            "latitude" to latitude,
+                            "longitude" to longitude,
+                            "distance" to distance,
+                            "subjects" to subjects,
+                            "cost" to cost,
+                            "costFactor" to perCostFactor,
+                            "about" to aboutMe,
+                            "educationDetails" to education,
+                            "experienceDetails" to experience
+                    )
+
+                    // Create document in firestore tutors collection
+                    db.collection("tutors")
+                            .document(user.uid)
+                            .set(newUserInfo)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "DocumentSnapshot added.")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
+
+                    openNextActivity()
+                }
+    }
+
+    // Start the tutor activity and clear all previous activities from stack
+    private fun openNextActivity() {
+        val intent = Intent(this, TutorActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 
     // Show the fragment at the given number of the list
