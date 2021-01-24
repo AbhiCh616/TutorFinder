@@ -129,6 +129,11 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
 
     private fun addSubjectToScreen(subjectName: String) {
 
+        // Subject is empty
+        if(subjectName == "") {
+            return
+        }
+
         // String contains space
         if (subjectName.contains(' ')) {
             Snackbar.make(addSubjectButton, getString(R.string.subject_space_warning), Snackbar.LENGTH_SHORT)
