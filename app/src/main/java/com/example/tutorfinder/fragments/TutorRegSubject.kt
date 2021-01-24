@@ -1,5 +1,6 @@
 package com.example.tutorfinder.fragments
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -11,22 +12,38 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
+import com.example.tutorfinder.interfaces.BasicInfoListener
+import com.example.tutorfinder.interfaces.SetAllEntries
+import com.example.tutorfinder.interfaces.SubjectListener
+import com.example.tutorfinder.utils.PerCostFactor
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import java.util.*
 import java.util.regex.Pattern
 
-class TutorRegSubject : Fragment(), View.OnClickListener {
+class TutorRegSubject : Fragment(), View.OnClickListener, SetAllEntries {
+
+    companion object {
+        private val TAG = TutorRegSubject::class.qualifiedName
+    }
 
     // Views
     private lateinit var addSubjectButton: TextView
     private lateinit var subjectFlexBox: FlexboxLayout
     private lateinit var currencyText: MaterialTextView
+    private lateinit var cost: TextInputEditText
     private lateinit var perSpinner: Spinner
 
     // To store subjects view
     private val subjectNameList: MutableList<String> = mutableListOf()
+
+    // To send data to Activity
+    private var listener: SubjectListener? = null
+
+    // To store data
+    private var perCostFactor: PerCostFactor = PerCostFactor.Month
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -43,6 +60,7 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
         addSubjectButton = requireView().findViewById(R.id.add_subject_text)
         subjectFlexBox = requireView().findViewById(R.id.subjects_flex_box)
         currencyText = requireView().findViewById(R.id.currency_text)
+        cost = requireView().findViewById(R.id.cost)
         perSpinner = requireView().findViewById(R.id.per_spinner)
 
         // Set onClick listener
@@ -63,6 +81,18 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
             perSpinner.adapter = adapter
         }
 
+        perSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when(position) {
+                    1 -> perCostFactor = PerCostFactor.Month
+                    2 -> perCostFactor = PerCostFactor.Day
+                    3 -> perCostFactor = PerCostFactor.Hour
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
     }
 
     override fun onStart() {
@@ -78,8 +108,35 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Set listener
+        if (context is SubjectListener) {
+            listener = context
+        } else {
+            Log.e(TutorRegSubject.TAG, TutorRegSubject.TAG + " must be " + BasicInfoListener::class.qualifiedName)
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
+    }
+
+    override fun setAllEntries() {
+        listener?.setSubject(subjectNameList)
+        listener?.setCost(cost.text.toString().toInt())
+        listener?.setCostFactor(perCostFactor)
+    }
+
+    override fun validateForm(): Boolean {
+        return true
+    }
+
     override fun onClick(v: View) {
-        when(v.tag) {
+        when (v.tag) {
             "subject_tag" -> deleteTag(v)
         }
 
@@ -130,7 +187,7 @@ class TutorRegSubject : Fragment(), View.OnClickListener {
     private fun addSubjectToScreen(subjectName: String) {
 
         // Subject is empty
-        if(subjectName == "") {
+        if (subjectName == "") {
             return
         }
 

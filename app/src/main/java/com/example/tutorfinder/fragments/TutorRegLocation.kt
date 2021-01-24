@@ -20,6 +20,10 @@ import java.text.DecimalFormat
 
 class TutorRegLocation : Fragment(), SetAllEntries {
 
+    companion object {
+        private val TAG = TutorRegLocation::class.qualifiedName
+    }
+
     // Views
     private lateinit var slider: CircularSeekBar
     private lateinit var distanceAnimationImage: ShapeableImageView
@@ -116,8 +120,8 @@ class TutorRegLocation : Fragment(), SetAllEntries {
             listener = context
         }
         else {
-            Log.e(TutorRegBasicInfo.TAG,
-                    TutorRegBasicInfo.TAG + " must be " + DistanceListener::class.qualifiedName)
+            Log.e(TutorRegLocation.TAG,
+                    TutorRegLocation.TAG + " must be " + DistanceListener::class.qualifiedName)
         }
     }
 

@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText
 class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
 
     companion object {
-        val TAG = TutorRegBasicInfo::class.qualifiedName
+        private val TAG = TutorRegBasicInfo::class.qualifiedName
     }
 
     // Views

@@ -13,10 +13,13 @@ import com.example.tutorfinder.fragments.TutorRegSubject
 import com.example.tutorfinder.interfaces.BasicInfoListener
 import com.example.tutorfinder.interfaces.DistanceListener
 import com.example.tutorfinder.interfaces.SetAllEntries
+import com.example.tutorfinder.interfaces.SubjectListener
 import com.example.tutorfinder.utils.Gender
+import com.example.tutorfinder.utils.PerCostFactor
 import com.google.android.material.imageview.ShapeableImageView
 
-class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoListener, DistanceListener {
+class TutorRegistration: AppCompatActivity(), View.OnClickListener,
+        BasicInfoListener, DistanceListener, SubjectListener {
 
     companion object {
         private val TAG = TutorRegistration::class.qualifiedName
@@ -34,6 +37,9 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
     private var age: Int? = null
     private var gender: Gender? = null
     private var distance: Float? = null
+    private var subjects: List<String>? = null
+    private var cost: Int? = null
+    private var perCostFactor: PerCostFactor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +76,8 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
             Log.e(TAG, TAG + " is not of type " + SetAllEntries::class.qualifiedName)
         }
 
-        Log.d(TAG, name + " " + age + " " + gender.toString() + " " + distance)
+        Log.d(TAG, name + " " + age + " " + gender.toString() + " " + distance + " " + subjects.toString()
+        + " " + cost + " " + perCostFactor.toString())
 
         // If we are not at the last fragment of the list
         if(++presentFragmentNumber < fragmentList.size) {
@@ -111,6 +118,15 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
     }
     override fun setDistance(distance: Float?) {
         this.distance = distance
+    }
+    override fun setSubject(subjects: List<String>) {
+        this.subjects = subjects
+    }
+    override fun setCost(cost: Int) {
+        this.cost = cost
+    }
+    override fun setCostFactor(perCostFactor: PerCostFactor) {
+        this.perCostFactor = perCostFactor
     }
 
 }
