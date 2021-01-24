@@ -71,6 +71,10 @@
     <string name="subject_space_warning">Entered value can\'t contain space.</string>
     <string name="subject_alpha_warning">Subject can\'t contain anything other than alphabets.</string>
     <string name="subject_already_warning">Subject is already selected.</string>
+    <string name="optional_info">Optional Information</string>
+    <string name="tell_us_about_you">Tell something about yourself for students</string>
+    <string name="education">Educational qualifications</string>
+    <string name="experience">Experience you have</string>
 
     <string-array name="per_array">
         <item>month</item>
