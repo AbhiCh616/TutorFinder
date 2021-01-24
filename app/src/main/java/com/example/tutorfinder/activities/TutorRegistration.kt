@@ -1,6 +1,7 @@
 package com.example.tutorfinder.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,9 +10,12 @@ import com.example.tutorfinder.fragments.TutorRegBasicInfo
 import com.example.tutorfinder.fragments.TutorRegLocation
 import com.example.tutorfinder.fragments.TutorRegOptionalFragment
 import com.example.tutorfinder.fragments.TutorRegSubject
+import com.example.tutorfinder.interfaces.BasicInfoListener
+import com.example.tutorfinder.interfaces.SetAllEntries
+import com.example.tutorfinder.utils.Gender
 import com.google.android.material.imageview.ShapeableImageView
 
-class TutorRegistration: AppCompatActivity(), View.OnClickListener {
+class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoListener {
 
     companion object {
         private val TAG = TutorRegistration::class.qualifiedName
@@ -23,6 +27,11 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener {
 
     // Views
     private lateinit var nextButton: ShapeableImageView
+
+    // User info
+    private var name: String? = null
+    private var age: Int? = null
+    private var gender: Gender? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +54,22 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener {
     }
 
     private fun changeFragment() {
+        // Get data from fragment
+        if(fragmentList[presentFragmentNumber] is SetAllEntries) {
+            val fragment = fragmentList[presentFragmentNumber] as SetAllEntries
+            if(fragment.validateForm()) {
+                fragment.setAllEntries()
+            }
+            else {
+                return
+            }
+        }
+        else {
+            Log.e(TAG, TAG + " is not of type " + SetAllEntries::class.qualifiedName)
+        }
+
+        Log.d(TAG, name + " " + age + " " + gender.toString())
+
         // If we are not at the last fragment of the list
         if(++presentFragmentNumber < fragmentList.size) {
             startFragment(presentFragmentNumber)
@@ -70,6 +95,17 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener {
         else {
             startFragment(--presentFragmentNumber)
         }
+    }
+
+    // Interface implementations
+    override fun setName(name: String?) {
+        this.name = name
+    }
+    override fun setAge(age: Int?) {
+        this.age = age
+    }
+    override fun setGender(gender: Gender?) {
+        this.gender = gender
     }
 
 }
