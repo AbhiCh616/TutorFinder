@@ -130,7 +130,7 @@ class TutorRegLocation : Fragment(), SetAllEntries {
     }
 
     override fun setAllEntries() {
-        listener?.setDistance(slider.progress)
+        listener?.setDistance(((slider.progress * 100).toInt() / 100).toFloat())
     }
 
     override fun validateForm(): Boolean {
