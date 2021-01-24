@@ -11,11 +11,12 @@ import com.example.tutorfinder.fragments.TutorRegLocation
 import com.example.tutorfinder.fragments.TutorRegOptionalFragment
 import com.example.tutorfinder.fragments.TutorRegSubject
 import com.example.tutorfinder.interfaces.BasicInfoListener
+import com.example.tutorfinder.interfaces.DistanceListener
 import com.example.tutorfinder.interfaces.SetAllEntries
 import com.example.tutorfinder.utils.Gender
 import com.google.android.material.imageview.ShapeableImageView
 
-class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoListener {
+class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoListener, DistanceListener {
 
     companion object {
         private val TAG = TutorRegistration::class.qualifiedName
@@ -32,6 +33,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
     private var name: String? = null
     private var age: Int? = null
     private var gender: Gender? = null
+    private var distance: Float? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +70,7 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
             Log.e(TAG, TAG + " is not of type " + SetAllEntries::class.qualifiedName)
         }
 
-        Log.d(TAG, name + " " + age + " " + gender.toString())
+        Log.d(TAG, name + " " + age + " " + gender.toString() + " " + distance)
 
         // If we are not at the last fragment of the list
         if(++presentFragmentNumber < fragmentList.size) {
@@ -106,6 +108,9 @@ class TutorRegistration: AppCompatActivity(), View.OnClickListener, BasicInfoLis
     }
     override fun setGender(gender: Gender?) {
         this.gender = gender
+    }
+    override fun setDistance(distance: Float?) {
+        this.distance = distance
     }
 
 }

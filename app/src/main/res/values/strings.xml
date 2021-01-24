@@ -78,6 +78,7 @@
     <string name="gender_empty_error">Please select a gender.</string>
     <string name="name_empty_error">Please enter your name.</string>
     <string name="age_empty_error">Please enter your age.</string>
+    <string name="distance_low_error">Please select at least 0.1 km.</string>
 
     <string-array name="per_array">
         <item>month</item>

@@ -1,22 +1,32 @@
 package com.example.tutorfinder.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.tutorfinder.R
+import com.example.tutorfinder.interfaces.BasicInfoListener
+import com.example.tutorfinder.interfaces.DistanceListener
+import com.example.tutorfinder.interfaces.SetAllEntries
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 import me.tankery.lib.circularseekbar.CircularSeekBar
 import java.text.DecimalFormat
 
-class TutorRegLocation : Fragment() {
+class TutorRegLocation : Fragment(), SetAllEntries {
 
     // Views
     private lateinit var slider: CircularSeekBar
     private lateinit var distanceAnimationImage: ShapeableImageView
     private lateinit var distanceText: MaterialTextView
+
+    // To send data to Activity
+    var listener: DistanceListener? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -92,10 +102,46 @@ class TutorRegLocation : Fragment() {
                 })
 
         // Set distance text to match with slider
-        if(0 < slider.progress) {
+        if (0 < slider.progress) {
             distanceText.text = (String.format("%.1f", (slider.progress / 10))
                     + " " + getString(R.string.km))
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Set listener
+        if(context is DistanceListener) {
+            listener = context
+        }
+        else {
+            Log.e(TutorRegBasicInfo.TAG,
+                    TutorRegBasicInfo.TAG + " must be " + DistanceListener::class.qualifiedName)
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
+    }
+
+    override fun setAllEntries() {
+        listener?.setDistance(slider.progress)
+    }
+
+    override fun validateForm(): Boolean {
+        // Slider is set to less than 100 metres
+        if (slider.progress < 1) {
+            Snackbar.make(requireActivity().findViewById(R.id.next_button),
+                    getString(R.string.distance_low_error),
+                    Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return false
+        }
+        return true
     }
 
 }
