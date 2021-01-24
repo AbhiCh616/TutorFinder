@@ -132,6 +132,24 @@ class TutorRegSubject : Fragment(), View.OnClickListener, SetAllEntries {
     }
 
     override fun validateForm(): Boolean {
+        // No subject is selected
+        if(subjectNameList.count() == 0) {
+            Snackbar.make(requireActivity().findViewById(R.id.next_button),
+                    getString(R.string.subject_no_error),
+                    Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return false
+        }
+        // Price not entered
+        if(cost.text.toString().isEmpty()) {
+                    Snackbar.make(requireActivity().findViewById(R.id.next_button),
+                    getString(R.string.cost_no_error),
+                    Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red))
+                    .show()
+            return false
+        }
         return true
     }
 
