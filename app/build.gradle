@@ -88,4 +88,7 @@ dependencies {
 
     // FlexboxLayout
     implementation 'com.google.android:flexbox:2.0.1'
+
+    // Google Location
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
 }
