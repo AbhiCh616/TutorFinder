@@ -84,9 +84,9 @@ class TutorRegSubject : Fragment(), View.OnClickListener, SetAllEntries {
         perSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(position) {
-                    1 -> perCostFactor = PerCostFactor.Month
-                    2 -> perCostFactor = PerCostFactor.Day
-                    3 -> perCostFactor = PerCostFactor.Hour
+                    0 -> perCostFactor = PerCostFactor.Month
+                    1 -> perCostFactor = PerCostFactor.Day
+                    2 -> perCostFactor = PerCostFactor.Hour
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
