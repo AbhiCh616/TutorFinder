@@ -1,6 +1,7 @@
 package com.example.tutorfinder.activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import org.w3c.dom.Text
 
 class TutorDetailsActivity : AppCompatActivity() {
 
@@ -33,6 +35,10 @@ class TutorDetailsActivity : AppCompatActivity() {
     private lateinit var profilePic: ImageView
     private lateinit var aboutMe: TextView
     private lateinit var rating: TextView
+    private lateinit var educationField: TextView
+    private lateinit var experienceField: TextView
+    private lateinit var educationHeading: TextView
+    private lateinit var experienceHeading: TextView
 
     // To store firestore document
     private var tutorInfo: TutorInfo? = null
@@ -46,6 +52,10 @@ class TutorDetailsActivity : AppCompatActivity() {
         name = findViewById(R.id.name)
         aboutMe = findViewById(R.id.about_me)
         rating = findViewById(R.id.rating)
+        educationField = findViewById(R.id.education_field)
+        experienceField = findViewById(R.id.experience_field)
+        educationHeading = findViewById(R.id.educationHeading)
+        experienceHeading = findViewById(R.id.experienceHeading)
 
         // Get firestore document reference
         docRefString = intent.getStringExtra("docRef").toString()
@@ -60,10 +70,30 @@ class TutorDetailsActivity : AppCompatActivity() {
                     name.text = tutorInfo?.name
 
                     // Display about me section
-                    aboutMe.text = tutorInfo?.about
+                    if (tutorInfo?.about != "") {
+                        aboutMe.text = tutorInfo?.about
+                    } else {
+                        aboutMe.visibility = View.GONE
+                    }
 
                     // Display rating
                     rating.text = tutorInfo?.rating.toString()
+
+                    // Display education
+                    if (tutorInfo?.educationDetails != "") {
+                        educationField.text = tutorInfo?.educationDetails
+                    } else {
+                        educationField.visibility = View.GONE
+                        educationHeading.visibility = View.GONE
+                    }
+
+                    //Display experience
+                    if ( tutorInfo?.experienceDetails != "") {
+                        experienceField.text = tutorInfo?.experienceDetails
+                    } else {
+                        experienceField.visibility = View.GONE
+                        experienceHeading.visibility = View.GONE
+                    }
 
                     //Display image
                     val storage = FirebaseStorage.getInstance()

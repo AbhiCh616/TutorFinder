@@ -53,8 +53,12 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
             position: Int,
             model: TutorInfo
     ) {
+        // Set basic fields
+        // Name
         holder.name.text = model.name
+        // Rating
         holder.rating.text = model.rating.toString()
+        // Cost
         holder.rate.text = (8377.toChar() + model.cost.toString())
 
         // Set cost factor

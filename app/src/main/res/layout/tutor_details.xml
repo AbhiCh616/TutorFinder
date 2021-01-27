@@ -124,16 +124,60 @@
             tools:text="@string/reviews" />
 
         <TextView
+            android:id="@+id/educationHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/fee_structure"
+            android:text="@string/education"
             android:textColor="#2B2D42"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:text="@string/fee_structure" />
+            tools:text="@string/education" />
+
+        <TextView
+            android:id="@+id/education_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="left"
+            android:textColor="#2B2D42"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/educationHeading"
+            app:layout_constraintTop_toBottomOf="@+id/educationHeading"
+            tools:text="@string/education" />
+
+        <TextView
+            android:id="@+id/experienceHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/experience"
+            android:textColor="#2B2D42"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/education_field"
+            tools:text="@string/experience" />
+
+        <TextView
+            android:id="@+id/experience_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="left"
+            android:textColor="#2B2D42"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/experienceHeading"
+            app:layout_constraintTop_toBottomOf="@+id/experienceHeading"
+            tools:text="@string/experience" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

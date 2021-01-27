@@ -74,7 +74,7 @@
     <string name="optional_info">Optional Information</string>
     <string name="tell_us_about_you">Tell something about yourself for students</string>
     <string name="education">Educational qualifications</string>
-    <string name="experience">Experience you have</string>
+    <string name="experience_you_have">Experience you have</string>
     <string name="gender_empty_error">Please select a gender.</string>
     <string name="name_empty_error">Please enter your name.</string>
     <string name="age_empty_error">Please enter your age.</string>
@@ -85,6 +85,7 @@
     <string name="cant_get_location">Problem finding your location. Please check your location settings.</string>
     <string name="s_per_hour">per hour</string>
     <string name="s_per_day">per day</string>
+    <string name="experience">Experience</string>
 
     <string-array name="per_array">
         <item>month</item>
