@@ -96,7 +96,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/per"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/cost"
         app:layout_constraintStart_toEndOf="@+id/cost"
         app:layout_constraintTop_toTopOf="@+id/cost" />

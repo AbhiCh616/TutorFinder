@@ -75,6 +75,12 @@ class TutorRegBasicInfo : Fragment(), View.OnClickListener, SetAllEntries {
             Gender.Female -> selectGenderFemale()
             Gender.Other -> selectGenderOther()
         }
+
+        if(profilePicUri != null) {
+            Glide.with(this)
+                    .load(profilePicUri)
+                    .into(profilePic)
+        }
     }
 
     override fun onAttach(context: Context) {
