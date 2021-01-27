@@ -22,4 +22,9 @@
     <color name="blue">#070d59</color>
     <color name="red">#ef4f4f</color>
     <color name="green">#16c79a</color>
+
+    <color name="tag_1_fore">#0077B6</color>
+    <color name="tag_1_back">#CAF0F8</color>
+    <color name="tag_2_fore">#815AC0</color>
+    <color name="tag_2_back">#DAC3E8</color>
 </resources>

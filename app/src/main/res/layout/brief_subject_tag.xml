@@ -17,6 +17,7 @@
         tools:text="@string/your_name"
         android:textSize="12sp"
         android:textColor="@color/black"
-        android:id="@+id/text_box"/>
+        android:id="@+id/text_box"
+        android:textStyle="bold"/>
 
 </LinearLayout>

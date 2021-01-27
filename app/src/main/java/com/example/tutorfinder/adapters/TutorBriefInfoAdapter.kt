@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tutorfinder.utils.GlideApp
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
+import com.example.tutorfinder.utils.GetColorForString
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.flexbox.FlexboxLayout
@@ -91,8 +93,18 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val child = layoutInflater.inflate(R.layout.brief_subject_tag, null)
         child.tag = "subject_tag"
+
+        // Set tag color
+        val pair = GetColorForString.getColor(subjectName)
+        val backgroundColor = pair.first
+        val fontColor = pair.second
+        child.backgroundTintList = ContextCompat
+                .getColorStateList(holder.itemView.context, backgroundColor)
+
+        // Text of tag
         val textBox = child.findViewById<MaterialTextView>(R.id.text_box)
         textBox.text = subjectName
+        textBox.setTextColor(ContextCompat.getColor(holder.itemView.context, fontColor))
         subjectsField.addView(child)
     }
 
