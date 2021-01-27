@@ -4,25 +4,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/name"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:autofillHints="username"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_edit_text"
+        android:backgroundTint="@color/grey_200"
         android:hint="@string/your_name"
-        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/age"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/submit"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_edit_text"
+        android:backgroundTint="@color/grey_200"
+        android:hint="@string/age"
+        android:inputType="number"
+        android:padding="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gender_male_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/grey_500"
+        android:padding="16dp"
+        android:text="@string/male"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="@+id/age"
+        app:layout_constraintTop_toBottomOf="@+id/age" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gender_female_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/grey_500"
+        android:padding="16dp"
+        android:text="@string/female"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@+id/gender_male_button"
+        app:layout_constraintTop_toTopOf="@+id/gender_male_button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/gender_other_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/grey_500"
+        android:padding="16dp"
+        android:text="@string/other"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@+id/gender_female_button"
+        app:layout_constraintTop_toTopOf="@+id/gender_female_button" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/next_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/next_icon"
+        android:tint="?colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
