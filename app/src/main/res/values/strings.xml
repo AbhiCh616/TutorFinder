@@ -83,6 +83,8 @@
     <string name="cost_no_error">Please enter your estimated charge.</string>
     <string name="profile_pic_error">Please select a profile pic.</string>
     <string name="cant_get_location">Problem finding your location. Please check your location settings.</string>
+    <string name="s_per_hour">per hour</string>
+    <string name="s_per_day">per day</string>
 
     <string-array name="per_array">
         <item>month</item>

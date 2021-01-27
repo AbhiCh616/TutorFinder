@@ -6,7 +6,8 @@ data class TutorInfo(
         val name: String = "",
         val rating: Float = 0f,
         val subjects: List<String> = listOf(""),
-        val rate: Int = 0,
+        val cost: Int = 0,
         val profilePic: String = "",
-        val aboutMe: String = ""
+        val aboutMe: String = "",
+        val costFactor: String = ""
 )

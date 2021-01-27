@@ -30,18 +30,23 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="#2B2D42"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/profile_pic"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/app_name" />
 
         <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
@@ -63,21 +68,21 @@
             app:layout_constraintTop_toTopOf="@+id/name"
             tools:text="0.0" />
 
-        <TextView
-            android:id="@+id/subjects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/teal"
-            android:paddingStart="10dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/dark_teal"
-            android:textStyle="bold"
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/subjects_flex_box"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            app:dividerDrawable="@drawable/divider_brief_subjects"
+            app:flexWrap="wrap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name"
-            tools:text="@string/app_name" />
+            app:showDivider="middle" />
 
         <TextView
             android:id="@+id/rate"
@@ -89,9 +94,10 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/profile_pic"
             app:layout_constraintTop_toBottomOf="@+id/profile_pic"
-            tools:text="@string/app_name" />
+            tools:text="@string/_0_km" />
 
         <TextView
+            android:id="@+id/cost_factor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
