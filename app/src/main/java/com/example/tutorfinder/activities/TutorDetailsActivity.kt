@@ -60,7 +60,7 @@ class TutorDetailsActivity : AppCompatActivity() {
                     name.text = tutorInfo?.name
 
                     // Display about me section
-                    aboutMe.text = tutorInfo?.aboutMe
+                    aboutMe.text = tutorInfo?.about
 
                     // Display rating
                     rating.text = tutorInfo?.rating.toString()

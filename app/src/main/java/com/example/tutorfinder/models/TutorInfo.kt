@@ -8,6 +8,10 @@ data class TutorInfo(
         val subjects: List<String> = listOf(""),
         val cost: Int = 0,
         val profilePic: String = "",
-        val aboutMe: String = "",
-        val costFactor: String = ""
+        val about: String = "",
+        val costFactor: String = "",
+        val age: Int = 0,
+        val educationDetails: String = "",
+        val experienceDetails: String = "",
+        val gender: String = "",
 )

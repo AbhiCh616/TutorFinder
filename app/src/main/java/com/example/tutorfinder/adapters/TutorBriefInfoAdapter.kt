@@ -66,10 +66,10 @@ class TutorBriefInfoAdapter(options: FirestoreRecyclerOptions<TutorInfo>,
         }
 
         // Insert subject tags
+        holder.subjects.removeAllViews()
         for(subjectName in model.subjects) {
             addTag(subjectName, holder, holder.subjects)
         }
-
 
         // Get reference of profile pic stored in firebase storage
         val storage = FirebaseStorage.getInstance()
