@@ -1,6 +1,6 @@
 package com.example.tutorfinder.activities
 
-import android.content.Context
+import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -12,17 +12,19 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.tutorfinder.utils.GlideApp
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
+import com.example.tutorfinder.utils.GlideApp
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import org.w3c.dom.Text
+
 
 class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -48,6 +50,7 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var aboutMe: TextView
     private lateinit var writeReview: TextView
     private lateinit var rating: TextView
+    private lateinit var numberOfRatings: TextView
     private lateinit var educationField: TextView
     private lateinit var experienceField: TextView
     private lateinit var educationHeading: TextView
@@ -69,6 +72,7 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
         aboutMe = findViewById(R.id.about_me)
         writeReview = findViewById(R.id.write_review)
         rating = findViewById(R.id.rating)
+        numberOfRatings = findViewById(R.id.num_review)
         educationField = findViewById(R.id.education_field)
         experienceField = findViewById(R.id.experience_field)
         educationHeading = findViewById(R.id.educationHeading)
@@ -122,6 +126,31 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
                             .load(gsReference)
                             .circleCrop()
                             .into(profilePic)
+                }
+
+        // Get review related information
+        docRef.collection("ratings").get()
+                .addOnCompleteListener { task: Task<QuerySnapshot> ->
+                    if (task.isSuccessful) {
+
+                        // Set number of reviews and average rating
+                        var numOfReviews: Float = 0f
+                        var totalStars: Float = 0f
+                        for (doc in task.result) {
+                            numOfReviews++
+                            totalStars += doc.get("stars").toString().toInt()
+                        }
+
+                        if (numOfReviews != 0f) {
+                            // Update rating number and average rating
+                            (this as Activity).runOnUiThread {
+                                rating.text = (totalStars / numOfReviews).toString()
+                                numberOfRatings.text = (numOfReviews.toInt().toString() + " " +
+                                        getString(R.string.review))
+                            }
+                        }
+
+                    }
                 }
     }
 
@@ -201,12 +230,12 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
     fun starClickHandler(stars: List<ImageView>, starNumber: Int) {
         starSelected = starNumber
         // Select stars
-        for(i in 0 until starNumber) {
+        for (i in 0 until starNumber) {
             stars[i].setImageResource(R.drawable.star_filled_24)
             stars[i].imageTintList = ContextCompat.getColorStateList(this, R.color.yellow)
         }
         // Unselect stars
-        for(i in starNumber until 5) {
+        for (i in starNumber until 5) {
             stars[i].setImageResource(R.drawable.star_outline_24)
             stars[i].imageTintList = ContextCompat.getColorStateList(this, R.color.black)
         }

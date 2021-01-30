@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/profile_pic"
@@ -99,6 +99,7 @@
             tools:text="0.0" />
 
         <TextView
+            android:id="@+id/num_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -137,17 +138,27 @@
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+        <LinearLayout
+            android:id="@+id/top_reviews_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/rating"
+            tools:layout_editor_absoluteX="16dp"
+            android:visibility="gone"/>
+
         <TextView
             android:id="@+id/educationHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:text="@string/education"
             android:textColor="#2B2D42"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/top_reviews_list"
             tools:text="@string/education" />
 
         <TextView

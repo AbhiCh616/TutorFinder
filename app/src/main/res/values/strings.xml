@@ -89,6 +89,7 @@
     <string name="write_review">Write a review</string>
     <string name="add_review">Add Review</string>
     <string name="describe_experience">Describe your experience.</string>
+    <string name="review">reviews</string>
 
     <string-array name="per_array">
         <item>month</item>
