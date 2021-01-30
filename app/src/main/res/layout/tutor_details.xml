@@ -80,10 +80,10 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/star"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/write_review"
             app:tint="@color/yellow" />
 
         <TextView
@@ -122,6 +122,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             tools:text="@string/reviews" />
+
+        <TextView
+            android:id="@+id/write_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="4dp"
+            android:text="@string/write_review"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/add_icon_24"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/educationHeading"

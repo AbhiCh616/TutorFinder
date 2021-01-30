@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/star1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/star_outline_24"
+        app:layout_constraintEnd_toStartOf="@+id/star2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/description"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/star5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/star_outline_24"
+        app:layout_constraintEnd_toEndOf="@+id/description"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/star4"
+        app:layout_constraintTop_toTopOf="@+id/star4"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/star4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/star_outline_24"
+        app:layout_constraintEnd_toStartOf="@+id/star5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/star3"
+        app:layout_constraintTop_toTopOf="@+id/star3"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/star3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/star_outline_24"
+        app:layout_constraintEnd_toStartOf="@+id/star4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/star2"
+        app:layout_constraintTop_toTopOf="@+id/star2"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/star2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/star_outline_24"
+        app:layout_constraintEnd_toStartOf="@+id/star3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/star1"
+        app:layout_constraintTop_toTopOf="@+id/star1"
+        app:tint="@color/black" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_edit_text"
+        android:backgroundTint="@color/grey_200"
+        android:gravity="top"
+        android:hint="@string/describe_experience"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/star1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

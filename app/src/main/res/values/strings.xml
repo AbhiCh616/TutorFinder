@@ -86,6 +86,9 @@
     <string name="s_per_hour">per hour</string>
     <string name="s_per_day">per day</string>
     <string name="experience">Experience</string>
+    <string name="write_review">Write a review</string>
+    <string name="add_review">Add Review</string>
+    <string name="describe_experience">Describe your experience.</string>
 
     <string-array name="per_array">
         <item>month</item>
