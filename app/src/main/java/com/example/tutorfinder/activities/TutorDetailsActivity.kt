@@ -24,6 +24,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
@@ -129,7 +131,7 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
         // Get review related information
-        docRef.collection("ratings").get()
+        docRef.collection("ratings").orderBy("stars").get()
                 .addOnCompleteListener { task: Task<QuerySnapshot> ->
                     if (task.isSuccessful) {
 
@@ -139,6 +141,9 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
                         for (doc in task.result) {
                             numOfReviews++
                             totalStars += doc.get("stars").toString().toInt()
+
+                            // Display ratings
+
                         }
 
                         if (numOfReviews != 0f) {
@@ -200,9 +205,16 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
         // Create dialog
         val dialog = builder.setView(inflatedView)
                 .setPositiveButton(R.string.ok) { _: DialogInterface, _: Int ->
+
+                    // Get date
+                    val date = Calendar.getInstance().time
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val formattedDate = dateFormat.format(date)
+
                     val newReview = hashMapOf(
                             "stars" to starSelected,
-                            "description" to description.text.toString()
+                            "description" to description.text.toString(),
+                            "date" to formattedDate
                     )
 
                     db.collection("tutors")
