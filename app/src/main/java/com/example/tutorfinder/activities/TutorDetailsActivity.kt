@@ -3,6 +3,7 @@ package com.example.tutorfinder.activities
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -14,6 +15,8 @@ import androidx.core.content.ContextCompat
 import com.example.tutorfinder.utils.GlideApp
 import com.example.tutorfinder.R
 import com.example.tutorfinder.models.TutorInfo
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -35,6 +38,9 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
     // Reference of document to open
     private lateinit var docRef: DocumentReference
+
+    // Firebase authentication
+    private var user: FirebaseUser = Firebase.auth.currentUser!!
 
     // Views
     private lateinit var name: TextView
@@ -165,7 +171,22 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
         // Create dialog
         val dialog = builder.setView(inflatedView)
                 .setPositiveButton(R.string.ok) { _: DialogInterface, _: Int ->
+                    val newReview = hashMapOf(
+                            "stars" to starSelected,
+                            "description" to description.text.toString()
+                    )
 
+                    db.collection("tutors")
+                            .document(docRefString)
+                            .collection("ratings")
+                            .document(user.uid)
+                            .set(newReview)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "DocumentSnapshot added.")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
                 }
                 .setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, _: Int ->
                     starSelected = 0
