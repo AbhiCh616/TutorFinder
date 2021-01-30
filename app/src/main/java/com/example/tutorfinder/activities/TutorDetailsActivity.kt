@@ -8,17 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.tutorfinder.R
+import com.example.tutorfinder.models.Rating
 import com.example.tutorfinder.models.TutorInfo
 import com.example.tutorfinder.utils.GlideApp
 import com.google.android.gms.tasks.Task
+import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -53,6 +57,7 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var writeReview: TextView
     private lateinit var rating: TextView
     private lateinit var numberOfRatings: TextView
+    private lateinit var reviewsList: LinearLayout
     private lateinit var educationField: TextView
     private lateinit var experienceField: TextView
     private lateinit var educationHeading: TextView
@@ -74,6 +79,7 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
         aboutMe = findViewById(R.id.about_me)
         writeReview = findViewById(R.id.write_review)
         rating = findViewById(R.id.rating)
+        reviewsList = findViewById(R.id.top_reviews_list)
         numberOfRatings = findViewById(R.id.num_review)
         educationField = findViewById(R.id.education_field)
         experienceField = findViewById(R.id.experience_field)
@@ -142,13 +148,18 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
                             numOfReviews++
                             totalStars += doc.get("stars").toString().toInt()
 
-                            // Display ratings
+                            // Display reviews
+                            this.runOnUiThread {
+                                createReview(doc)
+                            }
 
                         }
 
                         if (numOfReviews != 0f) {
                             // Update rating number and average rating
                             (this as Activity).runOnUiThread {
+                                reviewsList.visibility = View.VISIBLE
+
                                 rating.text = (totalStars / numOfReviews).toString()
                                 numberOfRatings.text = (numOfReviews.toInt().toString() + " " +
                                         getString(R.string.review))
@@ -157,6 +168,23 @@ class TutorDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
                     }
                 }
+    }
+
+    private fun createReview(doc: QueryDocumentSnapshot) {
+        // Inflate layout
+        val ratingCardInfo = doc.toObject<Rating>()
+
+        val inflatedLayout = layoutInflater.inflate(R.layout.review_card, null)
+
+        val rating = inflatedLayout.findViewById<MaterialTextView>(R.id.rating)
+        val date = inflatedLayout.findViewById<MaterialTextView>(R.id.date)
+        val description = inflatedLayout.findViewById<MaterialTextView>(R.id.description)
+
+        rating.text = ratingCardInfo.stars.toString()
+        description.text = ratingCardInfo.description
+        date.text = ratingCardInfo.date
+
+        reviewsList.addView(inflatedLayout)
     }
 
     override fun onClick(v: View) {
